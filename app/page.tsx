@@ -1,13 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import HomePage from '@components/Homepage.component';
 
 export default function Home() {
   return (
-    <div>
-       <p>
-      this is home page
-    </p>
-      <Link href={'/about'}> go to about page</Link>
-    </div>
+    <HomePage />
   )
 }
