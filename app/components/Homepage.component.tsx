@@ -1,46 +1,64 @@
 import Card from '@components/common/Card.component';
+import { POSTS } from 'dummyData/Posts.data';
 import { FcLike } from "react-icons/fc";
 import { FcComments } from "react-icons/fc";
+
+
+interface User {
+  avatarURL: string
+  username: string
+}
 
 const HomePage = () => {
   return (
     <div>
-      <Card
-        centerAligned={false}
-      >
-        <header>
-          <div className='flex gap-3 items-center'>
-            <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-            <div>
-              <h3>Selena Goemz</h3>
-              <p className='text-gray-400'>@selene</p>
+      {POSTS.map((post, index) => (
+        <Card
+          key={`card-${index}`}
+          centerAligned={false}
+          className='my-5'
+        >
+          <header>
+            <div className='flex gap-3 items-center'>
+              <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+                src={post.user.avatarURL} alt={post.user.username} />
+              <div>
+                <h3>{post.user.username}</h3>
+                <p className='text-gray-400 text-xs'>{post.timestamp}</p>
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <section className='my-6'>
-          <p className='text-base'>Roses are red  violets are blue, when I feel so bored so I start to think about you 😂</p>
-          <img
-            className='w-full my-5 border rounded-sm'
-            src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="image-desc" />
-        </section>
+          <section className='my-6'>
+            <p className='text-base'>
+              {post.description}
+            </p>
+            {post.media && 
+            <img
+              className='w-full my-5 border rounded-sm'
+              loading='lazy'
+              src={post.media}
+              alt="image-desc" />
+            }
+          </section>
 
-        <footer>
-          <div className='flex gap-5 items-center'>
-            <div className='flex gap-2'>
-              <FcLike className='text-xl cursor-pointer' title="Like" />
-              <span>9,7K</span>
+          <footer>
+            <div className='flex gap-5 items-center'>
+              <div className='flex gap-2'>
+                <FcLike className='text-xl cursor-pointer' title="Like" />
+                <span>{post.likes}</span>
+              </div>
+
+              <div className='flex gap-2 cursor-pointer' title='View comments'>
+                <FcComments className='text-xl' />
+                <span>{post.comments}</span>
+              </div>
             </div>
 
-            <div className='flex gap-2 cursor-pointer' title='View comments'>
-              <FcComments className='text-xl' />
-              <span>9,7K</span>
-            </div>
-          </div>
+          </footer>
 
-        </footer>
-
-      </Card>
+        </Card>
+      ))}
     </div>
   );
 }
