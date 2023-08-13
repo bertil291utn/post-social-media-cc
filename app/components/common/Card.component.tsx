@@ -8,7 +8,7 @@ const Card = ({ children, className, centerAligned = true, fullHeight = true }:
     fullHeight?: boolean
   }) => {
   return (
-    <div className={`bg-white rounded-xl shadow-md  p-5 w-1/3 
+    <div className={`bg-white rounded-xl shadow-md  p-5 w-full 
     ${className || ''} 
     ${centerAligned ? 'flex justify-items-center items-center' : ''}
     ${fullHeight ? 'h-1/4' : ''}

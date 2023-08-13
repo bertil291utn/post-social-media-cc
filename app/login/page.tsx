@@ -4,7 +4,7 @@ import Card from '@components/common/Card.component';
 
 const Login = () => {
   return (
-    <div className={`h-screen flex items-center justify-center w-2/3 mx-auto`}>
+    <div className={`h-screen flex items-center justify-center w-1/2 mx-auto`}>
       <Card >
         <div className='w-full mx-auto'>
           <Button
