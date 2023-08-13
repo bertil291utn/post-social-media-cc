@@ -1,6 +1,7 @@
 import Button from '@components/common/Button/Button.component';
 import { TERTIARY } from '@components/common/Button/button.helper';
 import Card from '@components/common/Card.component';
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   return (
@@ -9,8 +10,9 @@ const Login = () => {
         <div className='w-full mx-auto'>
           <Button
             type={TERTIARY}
+            className={`relative text-center`}
           >
-            <img alt="..." className="absolute w-5 mr-1" src="https://demos.creative-tim.com/notus-js/assets/img/google.svg" />
+            <FcGoogle className={`absolute text-lg`} />
             <span className='block'>
               Sign in with Google
             </span>

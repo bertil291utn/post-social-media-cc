@@ -1,18 +1,20 @@
+
 import { PRIMARY, SECONDARY, TERTIARY } from '@components/common/Button/button.helper';
 import { ReactNode } from 'react';
 
 
 type ButtonType = typeof PRIMARY | typeof SECONDARY | typeof TERTIARY;
 
-const Button = ({ children, type = PRIMARY }: {
+const Button = ({ children, className = '', type = PRIMARY }: {
   children: ReactNode
   type?: ButtonType
+  className?: string
 }) => {
-  const buttonClass=`relative w-full p-3 border-2 rounded-md`
+  const buttonClass = `${className} relative w-full p-3 border-2 rounded-md`
 
   if (type == PRIMARY) {
     return (
-      < button type='button' className={`${buttonClass} bg-gray-600`} >
+      <button type='button' className={`${buttonClass} bg-gray-600`}>
         {children}
       </button >
     )
