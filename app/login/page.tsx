@@ -4,9 +4,9 @@ import Card from '@components/common/Card.component';
 
 const Login = () => {
   return (
-    <div className={`h-screen flex items-center justify-center`}>
+    <div className={`h-screen flex items-center justify-center w-2/3 mx-auto`}>
       <Card >
-        <div className='w-11/12 mx-auto'>
+        <div className='w-full mx-auto'>
           <Button
             type={TERTIARY}
           >
