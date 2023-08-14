@@ -5,8 +5,9 @@ import { ReactNode } from 'react';
 
 type ButtonType = typeof PRIMARY | typeof SECONDARY | typeof TERTIARY;
 
-const Button = ({ children, className = '', type = PRIMARY }: {
+const Button = ({ children, onClick, className = '', type = PRIMARY }: {
   children: ReactNode
+  onClick: () => void
   type?: ButtonType
   className?: string
 }) => {
@@ -14,19 +15,30 @@ const Button = ({ children, className = '', type = PRIMARY }: {
 
   if (type == PRIMARY) {
     return (
-      <button type='button' className={`${buttonClass} bg-gray-600`}>
+      <button
+        onClick={onClick}
+        type='button' className={`${buttonClass} bg-gray-600`}>
         {children}
       </button >
     )
   }
 
   if (type == SECONDARY) {
-    return (null)
+    return (
+      <button
+        onClick={onClick}
+        type='button' className={`${buttonClass}`}>
+        {children}
+      </button >
+
+    )
   }
 
   if (type == TERTIARY) {
     return (
-      < button type='button' className={`${buttonClass} border-gray-300`} >
+      <button
+        onClick={onClick}
+        type='button' className={`${buttonClass} border-gray-300`} >
         {children}
       </button >
     )

@@ -4,6 +4,11 @@ import Card from '@components/common/Card.component';
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
+
+  const LoginAction = () => {
+    console.log('login action')
+  }
+
   return (
     <div className={`h-screen flex items-center justify-center w-1/2 mx-auto`}>
       <Card >
@@ -11,6 +16,7 @@ const Login = () => {
           <Button
             type={TERTIARY}
             className={`relative text-center`}
+            onClick={LoginAction}
           >
             <FcGoogle className={`absolute text-lg`} />
             <span className='block'>
