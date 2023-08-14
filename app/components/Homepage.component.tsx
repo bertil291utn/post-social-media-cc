@@ -1,9 +1,6 @@
-'use client'
 
 import Post from '@components/Post.component';
-import Modal from '@components/common/Modal.component';
 import { POSTS } from 'dummyData/Posts.data';
-import { useState } from 'react';
 
 const HomePage = () => {
   //TODO: reply with a comment task, leave to the end 
