@@ -3,7 +3,9 @@
 
 import EmptyPosts from '@components/Post/EmptyPost.component';
 import Post from '@components/Post/Post.component';
+import Modal from '@components/common/Modal.component';
 import { POSTS } from 'dummyData/Posts.data';
+import { useState } from 'react';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -14,14 +16,23 @@ const getPosts = async () => {
 }
 
 const PostLayout = () => {
-  const AddPost = () => {
+
+  const [addPostModal, setAddPostModal] = useState(false);
+
+  const AddPostOpenModal = () => {
+    setAddPostModal(true)
+  }
+
+  const AddPostBtnAction = () => {
     console.log('add Post')
   }
+
+
   // const _Posts = await getPosts()
   const _Posts: Array<Post> = []
   // POSTS
 
-  return ( 
+  return (
     <div>
       {_Posts.length
         ?
@@ -33,19 +44,29 @@ const PostLayout = () => {
         ))
         :
         <EmptyPosts
-          onClickAddPost={AddPost}
+          onClickAddPost={AddPostOpenModal}
         />
-
       }
+
+      <Modal
+        show={addPostModal}
+        setShow={setAddPostModal}
+        acceptLabel={'Add'}
+        acceptBtnAction={AddPostBtnAction}
+      >
+        <p>
+          this add a post  modal
+        </p>
+      </Modal>
 
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
 
       {/* 
-- add posts modal
+      - after hit add button, show a spinner on ADD button and disable ADD & CANCEL button
 - like/unlike behaviour   */}
       {/* REMINDER: if authentication is not possibe set anonymous or get suffle profile username and avatars */}
     </div>
-   );
+  );
 }
- 
+
 export default PostLayout;

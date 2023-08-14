@@ -1,5 +1,6 @@
 
 import { PRIMARY, SECONDARY, TERTIARY } from '@components/common/Button/button.helper';
+import { COLOR } from 'constants/colors.contants';
 import { ReactNode } from 'react';
 
 
@@ -17,7 +18,7 @@ const Button = ({ children, onClick, className = '', type = PRIMARY }: {
     return (
       <button
         onClick={onClick}
-        type='button' className={`${buttonClass} bg-gray-600`}>
+        type='button' className={`${buttonClass} ${COLOR.primary.bg}`}>
         {children}
       </button >
     )
