@@ -7,6 +7,7 @@ import Post from '@components/Post/Post.component';
 import Modal from '@components/common/Modal.component';
 import { POSTS } from 'dummyData/Posts.data';
 import { useState } from 'react';
+import { usePostContext } from 'context/Post.context';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -17,7 +18,8 @@ const getPosts = async () => {
 }
 
 const PostLayout = () => {
-
+  const { formValues } = usePostContext();
+  console.log("🚀 ~ file: Post.layout.tsx:22 ~ PostLayout ~ formValues:", formValues)
   const [addPostModal, setAddPostModal] = useState(false);
 
   const AddPostOpenModal = () => {
@@ -55,7 +57,7 @@ const PostLayout = () => {
         acceptLabel={'Add'}
         acceptBtnAction={AddPostBtnAction}
       >
-        <AddPostLayout/>
+        <AddPostLayout />
       </Modal>
 
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
