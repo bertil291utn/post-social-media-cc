@@ -1,5 +1,5 @@
+import Alert from '@components/common/Alert.component';
 import Spinner from '@components/common/Spinner/Spinner.component';
-import ToastMessage from '@components/common/Toast.lib';
 import { ERROR } from '@interfaces/ButtonVariantTypes.constants';
 import { COLOR } from 'constants/colors.contants';
 import { usePostContext } from 'context/Post.context';
@@ -30,6 +30,7 @@ const Modal = ({
   const { submittedForm } = usePostContext()
   const { formValues } = usePostContext();
   const [loadingLabel, setLoadingLabel] = useState('')
+  const [toastMessage, setToastMessage] = useState<boolean | string>('')
   const handleClose = () => setShow(false);
   const modalRef = useRef(null);
   const [IsOutsideElement] = useOutsideElement(modalRef);
@@ -47,7 +48,7 @@ const Modal = ({
 
   const _acceptBtnAction = () => {
     if (!formValues.description) {
-      ToastMessage.show({ message: 'Description can not be empty', variant: ERROR });
+      setToastMessage('Description can not be empty')
       return
     }
 
@@ -97,7 +98,15 @@ const Modal = ({
               </button>}
             </div>
           </div>
-          <div id='modal-app-toast' className='absolute bottom-8'></div>
+          <div className='absolute bottom-8'>
+            <Alert
+              show={!!toastMessage}
+              setShow={setToastMessage}
+              variant={ERROR}
+            >
+              <span>{toastMessage}</span>
+            </Alert>
+          </div>
         </div>
 
       </div>

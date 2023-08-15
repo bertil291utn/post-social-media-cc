@@ -38,11 +38,11 @@ const Alert = ({ children, show, setShow, duration = 4000, variant = SUCCESS }: 
   }
 
 
-  return (
-    <div className={`px-4 py-3 leading-normal ${typeTW} rounded-lg`} role="alert">
+  return show ? (
+    <div className={`text-sm px-4 py-3 leading-normal ${typeTW} rounded-lg`} role="alert">
       {children}
     </div>
-  );
+  ) : null;
 }
 
 export default Alert;
