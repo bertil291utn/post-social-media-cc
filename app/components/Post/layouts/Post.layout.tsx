@@ -1,7 +1,7 @@
 
 'use client'
 
-import AddPostLayout from '@components/Post/AddPost.layout';
+import AddPostLayout from '@components/Post/layouts/AddPost.layout';
 import EmptyPosts from '@components/Post/EmptyPost.component';
 import Post from '@components/Post/Post.component';
 import Modal from '@components/common/Modal.component';

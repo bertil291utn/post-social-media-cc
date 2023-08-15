@@ -1,4 +1,4 @@
-import PostLayout from '@components/Post/PostLayout.layout';
+import PostLayout from '@components/Post/layouts/Post.layout';
 
 const HomePage = () => {
 
