@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getRandomUser } from 'fetchData/getRandomUser.fetch';
 import { useSelector } from 'react-redux';
 import { postIsLoadingSelector, postsSelector } from 'redux/post.selector';
+import PostSkeleton from '@components/Post/PostSkeleton.component';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -50,9 +51,10 @@ const PostLayout = () => {
     )
     console.log('add Post')
   }
-
   if (!_PostsArr.length && postsIsloading) {
-    return (<>loading...</>)
+    return (
+      <PostSkeleton />
+    )
   }
 
   if (!_PostsArr.length && !postsIsloading) {
