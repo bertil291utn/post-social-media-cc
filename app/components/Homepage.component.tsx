@@ -10,7 +10,7 @@ import { initialSetPost, setIsLoading } from 'redux/Post.reducer';
 const HomePage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    //TODO: get POST from database instead local data
+    //TODO: get POST from database instead local data; order desc by timestamp
     dispatch(initialSetPost(POSTS))
     dispatch(setIsLoading(false))
 

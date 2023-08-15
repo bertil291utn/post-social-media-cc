@@ -31,11 +31,13 @@ export const postSlice = createSlice({
     addNewPost: (store, { payload }: PayloadAction<Post>) => {
       const postsArr = store.value.slice()
       postsArr.push(payload)
+      //TODO:order desc by timestamp
+      // postsArr.sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
       store.value = postsArr
     },
   },
 })
 
-export const { initialSetPost, setIsLoading, setLike,addNewPost } = postSlice.actions
+export const { initialSetPost, setIsLoading, setLike, addNewPost } = postSlice.actions
 
 export default postSlice.reducer
