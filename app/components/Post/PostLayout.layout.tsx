@@ -62,7 +62,6 @@ const PostLayout = () => {
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
 
       {/* 
-      - after hit add button, show a spinner on ADD button and disable ADD & CANCEL button
 - like/unlike behaviour   */}
       {/* REMINDER: if authentication is not possibe set anonymous or get suffle profile username and avatars */}
     </div>

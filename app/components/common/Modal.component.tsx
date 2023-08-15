@@ -1,6 +1,7 @@
+import Spinner from '@components/common/Spinner/Spinner.component';
 import { COLOR } from 'constants/colors.contants';
 import useOutsideElement from 'hooks/use.hook';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 interface PropTypes {
   children: ReactNode
   show: boolean
@@ -23,6 +24,7 @@ const Modal = ({
   backButton = true,
 
 }: PropTypes) => {
+  const [loadingLabel, setLoadingLabel] = useState('')
   const handleClose = () => setShow(false);
   const modalRef = useRef(null);
   const [IsOutsideElement] = useOutsideElement(modalRef);
@@ -33,8 +35,10 @@ const Modal = ({
   }, [IsOutsideElement]);
 
   const _acceptBtnAction = () => {
+    setLoadingLabel(`${acceptLabel}ing...`)
     acceptBtnAction && acceptBtnAction();
-    handleClose();
+    //TODO: close after being saved
+    // handleClose();
   };
 
   const _cancelBtnAction = () => {
@@ -57,13 +61,29 @@ const Modal = ({
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-              <button type="button" className={`inline-flex w-full justify-center rounded-md ${COLOR.primary.bg} px-3 py-2 text-sm font-semibold text-white shadow-sm hover:${COLOR.primary.hover} sm:ml-3 sm:w-auto`}
-                onClick={_acceptBtnAction}
-              >{acceptLabel}</button>
               <button
+                disabled={!!loadingLabel}
+                type="button" className={`inline-flex w-full justify-center rounded-md 
+                ${COLOR.primary.bg} px-3 py-2 text-sm font-semibold text-white shadow-sm 
+                hover:${COLOR.primary.hover} sm:ml-3 sm:w-auto 
+                ${!!loadingLabel ? 'cursor-not-allowed' : ''}`}
+                onClick={_acceptBtnAction}
+              >
+                {loadingLabel &&
+                  <>
+                    <Spinner />
+                    <span>
+                      {loadingLabel}
+                    </span>
+                  </>
+                }
+                {!loadingLabel && acceptLabel}
+              </button>
+              {!loadingLabel && <button
                 onClick={_cancelBtnAction}
                 type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
-                {cancelLabel || 'Cancel'}</button>
+                {cancelLabel || 'Cancel'}
+              </button>}
             </div>
           </div>
         </div>
