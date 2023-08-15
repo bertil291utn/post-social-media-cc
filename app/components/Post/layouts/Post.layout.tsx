@@ -49,7 +49,8 @@ const PostLayout = () => {
         }
       }
     )
-    console.log('add Post')
+    //TODO:triiger to db
+    //dispatch to redux
   }
   if (!_PostsArr.length && postsIsloading) {
     return (
