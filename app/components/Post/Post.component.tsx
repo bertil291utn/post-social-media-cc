@@ -3,6 +3,7 @@ import { Post } from 'interfaces/Post'
 import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
 import { useDispatch } from 'react-redux';
 import { setLike } from 'redux/Post.reducer';
+import { formatDate } from 'utils/formatDate.utils';
 
 const Post = ({ post }: { post: Post }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const Post = ({ post }: { post: Post }) => {
             src={post.user.avatarURL} alt={post.user.name} />
           <div>
             <h3>{post.user.name}</h3>
-            <p className='text-gray-400 text-xs'>{post.timestamp}</p>
+            <p className='text-gray-400 text-xs'>{formatDate(post.timestamp)}</p>
           </div>
         </div>
       </header>
