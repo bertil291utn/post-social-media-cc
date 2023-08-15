@@ -5,8 +5,8 @@ import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
 const Post = ({ post }: { post: Post }) => {
   //TODO: dispatch like and dislike to redux then update post to DB
 
-  const Like = (isLiked: boolean) => () => {
-    console.log(`value liked for ${post.id} post sent to DB`, !isLiked)
+  const Like = () => {
+    console.log(`value liked for ${post.id} post sent to DB`, !post.isLiked)
 
   }
 
@@ -44,9 +44,9 @@ const Post = ({ post }: { post: Post }) => {
           <div className='flex gap-2'>
             {post.isLiked
               ?
-              <FcLike onClick={Like(post.isLiked)} className='text-xl cursor-pointer' title="Dislike" />
+              <FcLike onClick={Like} className='text-xl cursor-pointer' title="Dislike" />
               :
-              <FcLikePlaceholder onClick={Like(post.isLiked)} className='text-xl cursor-pointer' title="Like" />}
+              <FcLikePlaceholder onClick={Like} className='text-xl cursor-pointer' title="Like" />}
             <span>{post.likes}</span>
           </div>
 
