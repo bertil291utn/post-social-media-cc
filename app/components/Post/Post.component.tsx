@@ -50,12 +50,12 @@ const Post = ({ post }: { post: Post }) => {
               <FcLike onClick={Like} className='text-xl cursor-pointer' title="Dislike" />
               :
               <FcLikePlaceholder onClick={Like} className='text-xl cursor-pointer' title="Like" />}
-            <span>{post.likes}</span>
+            <span>{`${post.likes}${post.likes ? 'K' : ''}`}</span>
           </div>
 
           <div className='flex gap-2 cursor-pointer' title='View comments'>
             <FcComments className='text-xl' />
-            <span>{post.comments}</span>
+            <span>{`${post.comments}${post.comments ? 'K' : ''}`}</span>
           </div>
         </div>
 

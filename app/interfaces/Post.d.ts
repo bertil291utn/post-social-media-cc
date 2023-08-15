@@ -6,7 +6,7 @@ export interface Post {
   timestamp: string
   description: string
   media?: string
-  comments: string
-  likes: string
+  comments: number
+  likes: number
   isLiked: boolean
 }

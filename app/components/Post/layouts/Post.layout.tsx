@@ -44,8 +44,8 @@ const PostLayout = () => {
       ...formValues,
       timestamp: new Date().toISOString(),
       id: idUUID,
-      likes: '0',
-      comments: '0',
+      likes: 0,
+      comments: 0,
       user: {
         avatarURL: genereatedUser.picture.medium,
         name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
