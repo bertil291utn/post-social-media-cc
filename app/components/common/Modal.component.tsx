@@ -1,5 +1,6 @@
 import Spinner from '@components/common/Spinner/Spinner.component';
 import { COLOR } from 'constants/colors.contants';
+import { usePostContext } from 'context/Post.context';
 import useOutsideElement from 'hooks/use.hook';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 interface PropTypes {
@@ -24,10 +25,18 @@ const Modal = ({
   backButton = true,
 
 }: PropTypes) => {
+  const { submittedForm } = usePostContext()
+  const { formValues } = usePostContext();
   const [loadingLabel, setLoadingLabel] = useState('')
   const handleClose = () => setShow(false);
   const modalRef = useRef(null);
   const [IsOutsideElement] = useOutsideElement(modalRef);
+
+  useEffect(() => {
+    submittedForm && setLoadingLabel(`${acceptLabel}ing...`)
+    !submittedForm && setLoadingLabel('')
+  }, [submittedForm])
+
   useEffect(() => {
     if (IsOutsideElement && backButton) {
       handleClose();
@@ -35,12 +44,13 @@ const Modal = ({
   }, [IsOutsideElement]);
 
   const _acceptBtnAction = () => {
-    setLoadingLabel(`${acceptLabel}ing...`)
+    if (!formValues.description) {
+      //TODO: show toast message add description
+      console.log('add description')
+      return
+    }
+
     acceptBtnAction && acceptBtnAction();
-    //TODO:if after 10 seconds doesn't return a value whetjer is error or a 202 value
-    //close the modal and display an error
-    //TODO: close and display a toast after being saved
-    // handleClose();
   };
 
   const _cancelBtnAction = () => {
@@ -64,9 +74,9 @@ const Modal = ({
               <button
                 disabled={!!loadingLabel}
                 type="button" className={`inline-flex w-full justify-center rounded-md 
-                ${COLOR.primary.bg} px-3 py-2 text-sm font-semibold text-white shadow-sm 
+                 px-3 py-2 text-sm font-semibold text-white shadow-sm 
                  sm:ml-3 sm:w-auto 
-                ${!!loadingLabel ? 'cursor-not-allowed bg-gray-400' : COLOR.primary.hover}`}
+                ${!!loadingLabel ? 'cursor-not-allowed bg-gray-400' : `${COLOR.primary.bg} ${COLOR.primary.hover}`}`}
                 onClick={_acceptBtnAction}
               >
                 {loadingLabel &&

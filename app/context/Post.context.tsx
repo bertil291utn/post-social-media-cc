@@ -10,11 +10,14 @@ interface IPropsProv {
 interface IContextProps {
   formValues: Post
   updateFormValues: (Post: Post) => void
+  submittedForm: boolean
+  updateSubmittedForm: (val: boolean) => void
 }
 
 const PostContext = createContext<IContextProps>({} as IContextProps);
 
 const PostProvider = ({ children }: IPropsProv) => {
+  const [submittedForm, setSubmittedForm] = useState(false)
   const [formValues, setFormValues] = useState({} as Post);
 
   const updateFormValues = (
@@ -22,12 +25,19 @@ const PostProvider = ({ children }: IPropsProv) => {
   ) => {
     setFormValues(Post);
   }
+  const updateSubmittedForm = (
+    val: boolean,
+  ) => {
+    setSubmittedForm(val);
+  }
 
   return (
     <PostContext.Provider
       value={{
         formValues,
-        updateFormValues
+        updateFormValues,
+        submittedForm,
+        updateSubmittedForm
       }}
     >
       {children}

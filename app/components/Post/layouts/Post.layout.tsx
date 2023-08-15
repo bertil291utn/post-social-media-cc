@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postIsLoadingSelector, postsSelector } from 'redux/post.selector';
 import PostSkeleton from '@components/Post/PostSkeleton.component';
 import { addNewPost } from 'redux/Post.reducer';
+import Button from '@components/common/Button/Button.component';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -23,17 +24,19 @@ const getPosts = async () => {
 }
 
 const PostLayout = () => {
-  const { formValues, updateFormValues } = usePostContext();
+  const { formValues, updateFormValues,updateSubmittedForm } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
   const _PostsArr = useSelector(postsSelector)
   const postsIsloading = useSelector(postIsLoadingSelector)
   const dispatch = useDispatch();
 
   const AddPostOpenModal = () => {
-    setAddPostModal(true)
+    setAddPostModal(true);
+    updateSubmittedForm(false);
   }
 
   const AddPostBtnAction = async () => {
+    updateSubmittedForm(true)
     const idUUID = uuidv4();
     let genereatedUser = await getRandomUser();
     genereatedUser = genereatedUser.results[0];
@@ -50,6 +53,11 @@ const PostLayout = () => {
     }
     updateFormValues(post)
     dispatch(addNewPost(post))
+    setAddPostModal(false)
+    
+    //TODO:if after 10 seconds doesn't return a value whetjer is error or a 202 value
+    //close the modal and display an error
+    //TODO: close and display a toast after being saved
     //TODO:trigger to db
   }
   if (!_PostsArr.length && postsIsloading) {
@@ -68,6 +76,12 @@ const PostLayout = () => {
 
   return (
     <div>
+      <Button
+        className='mt-14 text-white'
+        onClick={AddPostOpenModal}
+      >
+        <span>Add new post</span>
+      </Button>
       {
         _PostsArr.map((post) => (
           <Post
