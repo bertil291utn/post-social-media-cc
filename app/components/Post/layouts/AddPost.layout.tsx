@@ -5,7 +5,16 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 const AddPostLayout = () => {
   const { updateFormValues } = usePostContext();
-  const [_formVal, setFormValues] = useState({ id: 0, description: '' });
+  const [_formVal, setFormValues] = useState(
+    {
+      id: '',
+      user: {},
+      timestamp: '',
+      description: '',
+      comments: '',
+      likes: ''
+    }
+  );
 
   const ActionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormValues((p) => ({ ...p, [e.target.name]: e.target.value }));

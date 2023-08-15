@@ -8,6 +8,8 @@ import Modal from '@components/common/Modal.component';
 import { POSTS } from 'dummyData/Posts.data';
 import { useEffect, useState } from 'react';
 import { usePostContext } from 'context/Post.context';
+import { v4 as uuidv4 } from 'uuid';
+import { getRandomUser } from 'fetchData/getRandomUser.fetch';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -18,7 +20,7 @@ const getPosts = async () => {
 }
 
 const PostLayout = () => {
-  const { formValues } = usePostContext();
+  const { formValues, updateFormValues } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,23 @@ const PostLayout = () => {
     setAddPostModal(true)
   }
 
-  const AddPostBtnAction = () => {
+  const AddPostBtnAction = async () => {
+    const idUUID = uuidv4();
+    let genereatedUser = await getRandomUser();
+    genereatedUser = genereatedUser.results[0];
+    updateFormValues(
+      {
+        ...formValues,
+        timestamp: new Date().toISOString(),
+        id: idUUID,
+        likes: '0',
+        comments: '0',
+        user: {
+          avatarURL: genereatedUser.picture.medium,
+          name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
+        }
+      }
+    )
     console.log('add Post')
   }
 
