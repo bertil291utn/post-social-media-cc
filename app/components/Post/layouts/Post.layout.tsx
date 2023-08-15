@@ -5,11 +5,12 @@ import AddPostLayout from '@components/Post/layouts/AddPost.layout';
 import EmptyPosts from '@components/Post/EmptyPost.component';
 import Post from '@components/Post/Post.component';
 import Modal from '@components/common/Modal.component';
-import { POSTS } from 'dummyData/Posts.data';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePostContext } from 'context/Post.context';
 import { v4 as uuidv4 } from 'uuid';
 import { getRandomUser } from 'fetchData/getRandomUser.fetch';
+import { useSelector } from 'react-redux';
+import { postIsLoadingSelector, postsSelector } from 'redux/post.selector';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -22,6 +23,8 @@ const getPosts = async () => {
 const PostLayout = () => {
   const { formValues, updateFormValues } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
+  const _PostsArr = useSelector(postsSelector)
+  const postsIsloading = useSelector(postIsLoadingSelector)
 
 
   const AddPostOpenModal = () => {
@@ -48,27 +51,27 @@ const PostLayout = () => {
     console.log('add Post')
   }
 
+  if (!_PostsArr.length && postsIsloading) {
+    return (<>loading...</>)
+  }
 
-  // const _Posts = await getPosts()
-  const _Posts: Array<Post> = POSTS
-  // []
-  //TODO: set to redux toolkit all these posts
-  
+  if (!_PostsArr.length && !postsIsloading) {
+    return (
+      <EmptyPosts
+        onClickAddPost={AddPostOpenModal}
+      />
+    )
+  }
 
   return (
     <div>
-      {_Posts.length
-        ?
-        _Posts.map((post) => (
+      {
+        _PostsArr.map((post) => (
           <Post
             key={`post-card-${post.id}`}
             post={post}
           />
         ))
-        :
-        <EmptyPosts
-          onClickAddPost={AddPostOpenModal}
-        />
       }
 
       <Modal
@@ -81,6 +84,7 @@ const PostLayout = () => {
       </Modal>
 
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
+      {/* TODO: reply with a comment task, leave to the end  */}
 
     </div>
   );
