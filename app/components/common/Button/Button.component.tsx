@@ -9,7 +9,7 @@ type ButtonType = typeof PRIMARY | typeof SECONDARY | typeof TERTIARY;
 const Button = ({ children, onClick, className = '', buttonType = PRIMARY, type = 'button' }: {
   children: ReactNode
   onClick?: () => void
-  type: "button" | "submit" | "reset"
+  type?: "button" | "submit" | "reset"
   buttonType?: ButtonType
   className?: string
 }) => {
