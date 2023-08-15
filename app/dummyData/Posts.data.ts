@@ -10,6 +10,7 @@ export const POSTS = [
     media: 'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
     comments: `9.7K`,
     likes: `9.7K`,
+    isLiked: true
   },
   {
     id: '2',
@@ -21,6 +22,7 @@ export const POSTS = [
     description: 'Paty Roses are red  violets are blue, when I feel so bored so I start to think about you 😂',
     comments: `19.7K`,
     likes: `19.7K`,
+    isLiked: false
   }
 
 ]

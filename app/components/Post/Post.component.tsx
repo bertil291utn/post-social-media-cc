@@ -1,9 +1,15 @@
 import Card from '@components/common/Card.component';
 import { Post } from 'interfaces/Post'
-import { FcLike } from "react-icons/fc";
-import { FcComments } from "react-icons/fc";
+import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
 
 const Post = ({ post }: { post: Post }) => {
+  //TODO: dispatch like and dislike to redux then update post to DB
+
+  const Like = (isLiked: boolean) => () => {
+    console.log(`value liked for ${post.id} post sent to DB`, !isLiked)
+
+  }
+
   return (
     <Card
       centerAligned={false}
@@ -12,9 +18,9 @@ const Post = ({ post }: { post: Post }) => {
       <header>
         <div className='flex gap-3 items-center'>
           <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-            src={post.user.avatarURL} alt={post.user.username} />
+            src={post.user.avatarURL} alt={post.user.name} />
           <div>
-            <h3>{post.user.username}</h3>
+            <h3>{post.user.name}</h3>
             <p className='text-gray-400 text-xs'>{post.timestamp}</p>
           </div>
         </div>
@@ -36,7 +42,11 @@ const Post = ({ post }: { post: Post }) => {
       <footer>
         <div className='flex gap-5 items-center'>
           <div className='flex gap-2'>
-            <FcLike className='text-xl cursor-pointer' title="Like" />
+            {post.isLiked
+              ?
+              <FcLike onClick={Like(post.isLiked)} className='text-xl cursor-pointer' title="Dislike" />
+              :
+              <FcLikePlaceholder onClick={Like(post.isLiked)} className='text-xl cursor-pointer' title="Like" />}
             <span>{post.likes}</span>
           </div>
 

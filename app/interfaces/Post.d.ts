@@ -8,4 +8,5 @@ export interface Post {
   media?: string
   comments: string
   likes: string
+  isLiked: boolean
 }

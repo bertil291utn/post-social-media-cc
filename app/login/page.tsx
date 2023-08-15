@@ -14,7 +14,7 @@ const Login = () => {
       <Card >
         <div className='w-full mx-auto'>
           <Button
-            type={TERTIARY}
+            buttonType={TERTIARY}
             className={`relative text-center`}
             onClick={LoginAction}
           >

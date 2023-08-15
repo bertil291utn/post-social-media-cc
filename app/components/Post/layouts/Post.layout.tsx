@@ -23,9 +23,6 @@ const PostLayout = () => {
   const { formValues, updateFormValues } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
 
-  useEffect(() => {
-    console.log("🚀 ~ file: Post.layout.tsx:22 ~ PostLayout ~ formValues:", formValues)
-  }, [formValues])
 
   const AddPostOpenModal = () => {
     setAddPostModal(true)
@@ -53,8 +50,10 @@ const PostLayout = () => {
 
 
   // const _Posts = await getPosts()
-  const _Posts: Array<Post> = []
-  // POSTS
+  const _Posts: Array<Post> = POSTS
+  // []
+  //TODO: set to redux toolkit all these posts
+  
 
   return (
     <div>
@@ -83,9 +82,6 @@ const PostLayout = () => {
 
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
 
-      {/* 
-- like/unlike behaviour   */}
-      {/* REMINDER: if authentication is not possibe set anonymous or get suffle profile username and avatars */}
     </div>
   );
 }
