@@ -6,7 +6,7 @@ import EmptyPosts from '@components/Post/EmptyPost.component';
 import Post from '@components/Post/Post.component';
 import Modal from '@components/common/Modal.component';
 import { POSTS } from 'dummyData/Posts.data';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePostContext } from 'context/Post.context';
 
 const getPosts = async () => {
@@ -19,8 +19,11 @@ const getPosts = async () => {
 
 const PostLayout = () => {
   const { formValues } = usePostContext();
-  console.log("🚀 ~ file: Post.layout.tsx:22 ~ PostLayout ~ formValues:", formValues)
   const [addPostModal, setAddPostModal] = useState(false);
+
+  useEffect(() => {
+    console.log("🚀 ~ file: Post.layout.tsx:22 ~ PostLayout ~ formValues:", formValues)
+  }, [formValues])
 
   const AddPostOpenModal = () => {
     setAddPostModal(true)

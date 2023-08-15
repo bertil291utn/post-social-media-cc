@@ -65,8 +65,8 @@ const Modal = ({
                 disabled={!!loadingLabel}
                 type="button" className={`inline-flex w-full justify-center rounded-md 
                 ${COLOR.primary.bg} px-3 py-2 text-sm font-semibold text-white shadow-sm 
-                hover:${COLOR.primary.hover} sm:ml-3 sm:w-auto 
-                ${!!loadingLabel ? 'cursor-not-allowed' : ''}`}
+                 sm:ml-3 sm:w-auto 
+                ${!!loadingLabel ? 'cursor-not-allowed bg-gray-400' : COLOR.primary.hover}`}
                 onClick={_acceptBtnAction}
               >
                 {loadingLabel &&
