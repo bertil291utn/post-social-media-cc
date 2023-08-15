@@ -9,9 +9,10 @@ import { useState } from 'react';
 import { usePostContext } from 'context/Post.context';
 import { v4 as uuidv4 } from 'uuid';
 import { getRandomUser } from 'fetchData/getRandomUser.fetch';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postIsLoadingSelector, postsSelector } from 'redux/post.selector';
 import PostSkeleton from '@components/Post/PostSkeleton.component';
+import { addNewPost } from 'redux/Post.reducer';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -26,7 +27,7 @@ const PostLayout = () => {
   const [addPostModal, setAddPostModal] = useState(false);
   const _PostsArr = useSelector(postsSelector)
   const postsIsloading = useSelector(postIsLoadingSelector)
-
+  const dispatch = useDispatch();
 
   const AddPostOpenModal = () => {
     setAddPostModal(true)
@@ -36,21 +37,20 @@ const PostLayout = () => {
     const idUUID = uuidv4();
     let genereatedUser = await getRandomUser();
     genereatedUser = genereatedUser.results[0];
-    updateFormValues(
-      {
-        ...formValues,
-        timestamp: new Date().toISOString(),
-        id: idUUID,
-        likes: '0',
-        comments: '0',
-        user: {
-          avatarURL: genereatedUser.picture.medium,
-          name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
-        }
+    const post = {
+      ...formValues,
+      timestamp: new Date().toISOString(),
+      id: idUUID,
+      likes: '0',
+      comments: '0',
+      user: {
+        avatarURL: genereatedUser.picture.medium,
+        name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
       }
-    )
-    //TODO:triiger to db
-    //dispatch to redux
+    }
+    updateFormValues(post)
+    dispatch(addNewPost(post))
+    //TODO:trigger to db
   }
   if (!_PostsArr.length && postsIsloading) {
     return (

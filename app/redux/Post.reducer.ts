@@ -28,9 +28,14 @@ export const postSlice = createSlice({
         .map(p => p.id == payload.id ? ({ ...p, isLiked: !p.isLiked }) : p)
       store.value = editedPostsArr
     },
+    addNewPost: (store, { payload }: PayloadAction<Post>) => {
+      const postsArr = store.value.slice()
+      postsArr.push(payload)
+      store.value = postsArr
+    },
   },
 })
 
-export const { initialSetPost, setIsLoading, setLike } = postSlice.actions
+export const { initialSetPost, setIsLoading, setLike,addNewPost } = postSlice.actions
 
 export default postSlice.reducer
