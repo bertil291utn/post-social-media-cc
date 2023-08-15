@@ -1,45 +1,46 @@
 
 import { PRIMARY, SECONDARY, TERTIARY } from '@components/common/Button/button.helper';
 import { COLOR } from 'constants/colors.contants';
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 
 type ButtonType = typeof PRIMARY | typeof SECONDARY | typeof TERTIARY;
 
-const Button = ({ children, onClick, className = '', type = PRIMARY }: {
+const Button = ({ children, onClick, className = '', buttonType = PRIMARY, type = 'button' }: {
   children: ReactNode
-  onClick: () => void
-  type?: ButtonType
+  onClick?: () => void
+  type: "button" | "submit" | "reset"
+  buttonType?: ButtonType
   className?: string
 }) => {
   const buttonClass = `${className} relative w-full p-3 border-2 rounded-md`
 
-  if (type == PRIMARY) {
+  if (buttonType == PRIMARY) {
     return (
       <button
         onClick={onClick}
-        type='button' className={`${buttonClass} ${COLOR.primary.bg}`}>
+        type={type} className={`${buttonClass} ${COLOR.primary.bg}`}>
         {children}
       </button >
     )
   }
 
-  if (type == SECONDARY) {
+  if (buttonType == SECONDARY) {
     return (
       <button
         onClick={onClick}
-        type='button' className={`${buttonClass}`}>
+        type={type} className={`${buttonClass}`}>
         {children}
       </button >
 
     )
   }
 
-  if (type == TERTIARY) {
+  if (buttonType == TERTIARY) {
     return (
       <button
         onClick={onClick}
-        type='button' className={`${buttonClass} border-gray-300`} >
+        type={type} className={`${buttonClass} border-gray-300`} >
         {children}
       </button >
     )

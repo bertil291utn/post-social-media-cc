@@ -1,6 +1,7 @@
 
 'use client'
 
+import AddPostLayout from '@components/Post/AddPost.layout';
 import EmptyPosts from '@components/Post/EmptyPost.component';
 import Post from '@components/Post/Post.component';
 import Modal from '@components/common/Modal.component';
@@ -54,9 +55,7 @@ const PostLayout = () => {
         acceptLabel={'Add'}
         acceptBtnAction={AddPostBtnAction}
       >
-        <p>
-          this add a post  modal
-        </p>
+        <AddPostLayout/>
       </Modal>
 
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
