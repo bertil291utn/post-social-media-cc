@@ -30,9 +30,9 @@ export const postSlice = createSlice({
     },
     addNewPost: (store, { payload }: PayloadAction<Post>) => {
       const postsArr = store.value.slice()
-      postsArr.push(payload)
-      //TODO:order desc by timestamp
-      // postsArr.sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
+      postsArr.unshift(payload)
+      //NOTE:assuming with init get post order desc by timestamp
+      //unshift is adding at the top of post array, and we won't need order again
       store.value = postsArr
     },
   },
