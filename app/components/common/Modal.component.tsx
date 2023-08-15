@@ -1,4 +1,6 @@
 import Spinner from '@components/common/Spinner/Spinner.component';
+import ToastMessage from '@components/common/Toast.lib';
+import { ERROR } from '@interfaces/ButtonVariantTypes.constants';
 import { COLOR } from 'constants/colors.contants';
 import { usePostContext } from 'context/Post.context';
 import useOutsideElement from 'hooks/use.hook';
@@ -45,8 +47,7 @@ const Modal = ({
 
   const _acceptBtnAction = () => {
     if (!formValues.description) {
-      //TODO: show toast message add description
-      console.log('add description')
+      ToastMessage.show({ message: 'Description can not be empty', variant: ERROR });
       return
     }
 
@@ -96,7 +97,9 @@ const Modal = ({
               </button>}
             </div>
           </div>
+          <div id='modal-app-toast' className='absolute bottom-8'></div>
         </div>
+
       </div>
     </div>
 
