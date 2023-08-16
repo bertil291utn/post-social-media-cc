@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { LOGIN_KEY, SAVED_USERNAME_DEVICE } from 'redux/Login/Login.constant'
 
+
+
 export interface LoginState {
   value: Login
   isLoading: boolean
@@ -32,6 +34,6 @@ export const LoginSlice = createSlice({
   },
 })
 
-export const { initialSetLogin, setIsLoading,SetLogOut } = LoginSlice.actions
+export const { initialSetLogin, setIsLoading, SetLogOut } = LoginSlice.actions
 
 export default LoginSlice.reducer
