@@ -17,10 +17,6 @@ export const MiddleWareLogin = () => {
       return;
     }
 
-    if (currentPathName.startsWith('/') && !login) {
-      router.replace('/login');
-      return;
-    }
   }
 
   useEffect(() => {

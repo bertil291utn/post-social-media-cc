@@ -14,6 +14,8 @@ import PostSkeleton from '@components/Post/PostSkeleton.component';
 import { addNewPost } from 'redux/Post/Post.reducer';
 import Button from '@components/common/Button/Button.component';
 import { postIsLoadingSelector, postsSelector } from 'redux/Post/post.selector';
+import { LOGIN_KEY } from 'redux/Login/Login.constant';
+import { useRouter } from 'next/navigation';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -24,6 +26,7 @@ const getPosts = async () => {
 }
 
 const PostLayout = () => {
+  const router = useRouter();
   const { formValues, updateFormValues, updateSubmittedForm } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
   const _PostsArr = useSelector(postsSelector)
@@ -31,6 +34,11 @@ const PostLayout = () => {
   const dispatch = useDispatch();
 
   const AddPostOpenModal = () => {
+    const theresSession = localStorage.getItem(LOGIN_KEY)
+    if (!theresSession) {
+      router.replace('/login')
+      return
+    }
     setAddPostModal(true);
     updateSubmittedForm(false);
   }
