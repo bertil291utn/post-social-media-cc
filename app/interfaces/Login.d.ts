@@ -2,7 +2,7 @@ import { User } from '@interfaces/User'
 
 export interface Login {
   id: string
-  isAcive: boolean
+  isActive: boolean
   user: User
   timestampIat?: number
 

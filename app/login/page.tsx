@@ -3,22 +3,39 @@
 import Button from '@components/common/Button/Button.component';
 import { TERTIARY } from '@components/common/Button/button.helper';
 import Card from '@components/common/Card.component';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from 'react-redux';
+import { initialSetLogin } from 'redux/Login/Login.reducer';
 
 const Login = () => {
 
-  const [_formVal, setFormValues] = useState({ username: '', name: '', avatarURL: '' })
+  const [_formVal, setFormValues] = useState(
+    {
+      id: '',
+      isActive: false,
+      user: {
+        id: '', username: '', name: '', avatarURL: ''
+      }
+    }
+  )
   const [isLogin, setIsLogin] = useState(true)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsLogin(!localStorage.getItem('username'))
+  }, [])
+
 
   const LoginAction = () => {
     //TODO: send user to save db
     //TODO: dispatch current user is active session
+    dispatch(initialSetLogin(_formVal))
     console.log('login action')
   }
 
   const ActionChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormValues((p) => ({ ...p, [e.target.name]: e.target.value }));
+    setFormValues((p) => ({ ...p, user: { ...p.user, username: e.target.value } }));
   }
 
   return (
@@ -30,7 +47,7 @@ const Login = () => {
             <div className="mt-2">
               <div className="flex rounded-md shadow-sm ring-1 ring-inset focus:ring-0 ring-gray-300  sm:max-w-md">
                 <input type="text" name="username" id="username" autoComplete="username"
-                  value={_formVal.username}
+                  value={_formVal.user.username}
                   onChange={ActionChange}
                   disabled={!isLogin}
                   className="
