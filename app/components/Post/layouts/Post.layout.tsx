@@ -10,10 +10,10 @@ import { usePostContext } from 'context/Post.context';
 import { v4 as uuidv4 } from 'uuid';
 import { getRandomUser } from 'fetchData/getRandomUser.fetch';
 import { useDispatch, useSelector } from 'react-redux';
-import { postIsLoadingSelector, postsSelector } from 'redux/post.selector';
 import PostSkeleton from '@components/Post/PostSkeleton.component';
-import { addNewPost } from 'redux/Post.reducer';
+import { addNewPost } from 'redux/Post/Post.reducer';
 import Button from '@components/common/Button/Button.component';
+import { postIsLoadingSelector, postsSelector } from 'redux/Post/post.selector';
 
 const getPosts = async () => {
   const res = await fetch('https://api.example.com/...')
@@ -24,7 +24,7 @@ const getPosts = async () => {
 }
 
 const PostLayout = () => {
-  const { formValues, updateFormValues,updateSubmittedForm } = usePostContext();
+  const { formValues, updateFormValues, updateSubmittedForm } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
   const _PostsArr = useSelector(postsSelector)
   const postsIsloading = useSelector(postIsLoadingSelector)
@@ -37,16 +37,19 @@ const PostLayout = () => {
 
   const AddPostBtnAction = async () => {
     updateSubmittedForm(true)
-    const idUUID = uuidv4();
+    const idPost = uuidv4();
+    const idUser = uuidv4();
     let genereatedUser = await getRandomUser();
     genereatedUser = genereatedUser.results[0];
     const post = {
       ...formValues,
       timestamp: new Date().toISOString(),
-      id: idUUID,
+      id: idPost,
       likes: 0,
       comments: 0,
       user: {
+        id: idUser,
+        username: genereatedUser.login.username,
         avatarURL: genereatedUser.picture.medium,
         name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
       }
@@ -54,7 +57,7 @@ const PostLayout = () => {
     updateFormValues(post)
     dispatch(addNewPost(post))
     setAddPostModal(false)
-    
+
     //TODO:if after 10 seconds doesn't return a value whetjer is error or a 202 value
     //close the modal and display an error
     //TODO: close and display a toast after being saved

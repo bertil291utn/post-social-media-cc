@@ -5,7 +5,7 @@ import PostProvider from 'context/Post.context';
 import { POSTS } from 'dummyData/Posts.data';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { initialSetPost, setIsLoading } from 'redux/Post.reducer';
+import { initialSetPost, setIsLoading } from 'redux/Post/Post.reducer';
 
 const HomePage = () => {
   const dispatch = useDispatch();

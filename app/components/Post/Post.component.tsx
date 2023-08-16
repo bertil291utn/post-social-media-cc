@@ -2,7 +2,7 @@ import Card from '@components/common/Card.component';
 import { Post } from 'interfaces/Post'
 import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
 import { useDispatch } from 'react-redux';
-import { setLike } from 'redux/Post.reducer';
+import { setLike } from 'redux/Post/Post.reducer';
 import { formatDate } from 'utils/formatDate.utils';
 
 const Post = ({ post }: { post: Post }) => {
