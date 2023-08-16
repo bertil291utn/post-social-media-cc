@@ -1,3 +1,4 @@
+import Navbar from '@components/Navbar.component'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -16,7 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-100 py-8 max-w-3xl mx-auto`}>{children}</body>
+      <body className={`${inter.className} bg-gray-100 `}>
+        <Navbar />
+        <div className='py-8 max-w-3xl mx-auto'>
+          {children}
+        </div>
+
+      </body>
     </html>
   )
 }
