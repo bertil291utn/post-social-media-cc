@@ -19,17 +19,14 @@ const Login = () => {
       }
     }
   )
-  const [isLogin, setIsLogin] = useState(true)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setIsLogin(!localStorage.getItem('username'))
-  }, [])
 
 
   const LoginAction = () => {
-    //TODO: send user to save db
-    //TODO: dispatch current user is active session
+    //TODO: send user to save db and check behind the scenes if the current user 
+    // already exists just login other case store whole form data 
+
     dispatch(initialSetLogin(_formVal))
     console.log('login action')
   }
@@ -49,7 +46,6 @@ const Login = () => {
                 <input type="text" name="username" id="username" autoComplete="username"
                   value={_formVal.user.username}
                   onChange={ActionChange}
-                  disabled={!isLogin}
                   className="
                 block flex-1 border-0 bg-transparent p-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   placeholder="janesmith"
@@ -65,7 +61,7 @@ const Login = () => {
           >
             {/* <FcGoogle className={`absolute text-lg`} /> */}
             <span className='block text-white'>
-              Sign {`${isLogin ? 'in' : 'up'}`}
+              Sign in
             </span>
           </Button>
         </div>
