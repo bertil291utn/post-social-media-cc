@@ -1,0 +1,2 @@
+export const LOGIN_KEY = 'LOGIN'
+export const SAVED_USERNAME_DEVICE = 'SAVED_USERNAME_DEVICE'

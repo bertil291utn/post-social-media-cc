@@ -1,13 +1,19 @@
 'use client'
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { LOGIN_KEY } from 'redux/Login/Login.constant';
+import { SetLogOut } from 'redux/Login/Login.reducer';
 
 const Navbar = () => {
+  const router = useRouter()
   const [showMenu, setShowMenu] = useState(false)
+  const dispatch = useDispatch()
 
   const signOut = () => {
-    console.log('sign out')
-    //TODO:dispatch logut
+    dispatch(SetLogOut())
+    router.replace('/login')
   }
 
   return (

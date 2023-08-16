@@ -5,12 +5,15 @@ import Button from '@components/common/Button/Button.component';
 import { TERTIARY } from '@components/common/Button/button.helper';
 import Card from '@components/common/Card.component';
 import { ERROR } from '@interfaces/ButtonVariantTypes.constants';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from 'react-redux';
+import { SAVED_USERNAME_DEVICE } from 'redux/Login/Login.constant';
 import { initialSetLogin, setIsLoading } from 'redux/Login/Login.reducer';
 
 const Login = () => {
+  const router = useRouter()
   const [toastMessage, setToastMessage] = useState<boolean | string>('')
 
   const [_formVal, setFormValues] = useState(
@@ -37,11 +40,12 @@ const Login = () => {
 
     dispatch(initialSetLogin(_formVal))
     dispatch(setIsLoading(false))
-    localStorage.setItem('username', _formVal.user.username)
+    router.replace('/')
+    
   }
 
   useEffect(() => {
-    const username = localStorage.getItem('username') as string
+    const username= localStorage.getItem(SAVED_USERNAME_DEVICE) as string
     username && setFormValues((p) => ({ ...p, user: { ...p.user, username } }));
   }, [])
 
