@@ -11,14 +11,16 @@ const AddPostLayout = () => {
       user: {},
       timestamp: '',
       description: '',
-      comments: '',
-      likes: ''
+      comments: 0,
+      likes: 0,
+      isLiked: false
     }
   );
 
   const ActionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormValues((p) => ({ ...p, [e.target.name]: e.target.value }));
   }
+
   useEffect(() => {
     updateFormValues(_formVal as Post)
   }, [_formVal])
