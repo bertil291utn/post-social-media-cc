@@ -9,7 +9,6 @@ import { FcGoogle } from "react-icons/fc";
 const Login = () => {
 
   const [_formVal, setFormValues] = useState({ username: '', name: '', avatarURL: '' })
-  console.log("🚀 ~ file: page.tsx:12 ~ Login ~ _formVal:", _formVal)
   const [isLogin, setIsLogin] = useState(true)
 
   const LoginAction = () => {

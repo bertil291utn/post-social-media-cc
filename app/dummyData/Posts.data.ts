@@ -2,6 +2,8 @@ export const POSTS = [
   {
     id: '1',
     user: {
+      id:'0011',
+      username:'payty1',
       name: 'Selena Goemz',
       avatarURL: 'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
     },
@@ -15,6 +17,8 @@ export const POSTS = [
   {
     id: '2',
     user: {
+      id:'00113',
+      username:'payty2',
       name: 'Paty cantu',
       avatarURL: 'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
     },
