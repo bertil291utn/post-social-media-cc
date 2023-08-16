@@ -12,13 +12,13 @@ export const MiddleWareLogin = () => {
   const checkLoginService = () => {
     const login = localStorage.getItem(LOGIN_KEY)
 
-    if (currentPathName.startsWith('/login')) {
-      login && router.replace('/');
+    if (currentPathName.startsWith('/login') && login) {
+      router.replace('/');
       return;
     }
 
-    if (currentPathName.startsWith('/')) {
-      !login && router.replace('/login');
+    if (currentPathName.startsWith('/') && !login) {
+      router.replace('/login');
       return;
     }
   }
