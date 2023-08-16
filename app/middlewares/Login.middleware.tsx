@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { LOGIN_KEY } from 'redux/Login/Login.constant'
 
 export const MiddleWareLogin = () => {
-  const currentPathName = usePathname();
+  const currentPathName = usePathname() as string;
   const router = useRouter()
 
 
