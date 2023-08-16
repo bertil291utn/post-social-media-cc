@@ -1,14 +1,17 @@
 'use client'
 
+import Alert from '@components/common/Alert.component';
 import Button from '@components/common/Button/Button.component';
 import { TERTIARY } from '@components/common/Button/button.helper';
 import Card from '@components/common/Card.component';
+import { ERROR } from '@interfaces/ButtonVariantTypes.constants';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from 'react-redux';
-import { initialSetLogin } from 'redux/Login/Login.reducer';
+import { initialSetLogin, setIsLoading } from 'redux/Login/Login.reducer';
 
 const Login = () => {
+  const [toastMessage, setToastMessage] = useState<boolean | string>('')
 
   const [_formVal, setFormValues] = useState(
     {
@@ -24,12 +27,23 @@ const Login = () => {
 
 
   const LoginAction = () => {
+    if (!_formVal.user.username) {
+      setToastMessage('User name can not be empty')
+      return
+    }
+
     //TODO: send user to save db and check behind the scenes if the current user 
     // already exists just login other case store whole form data 
 
     dispatch(initialSetLogin(_formVal))
-    console.log('login action')
+    dispatch(setIsLoading(false))
+    localStorage.setItem('username', _formVal.user.username)
   }
+
+  useEffect(() => {
+    const username = localStorage.getItem('username') as string
+    username && setFormValues((p) => ({ ...p, user: { ...p.user, username } }));
+  }, [])
 
   const ActionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues((p) => ({ ...p, user: { ...p.user, username: e.target.value } }));
@@ -64,6 +78,15 @@ const Login = () => {
               Sign in
             </span>
           </Button>
+          <div className='absolute bottom-8'>
+            <Alert
+              show={!!toastMessage}
+              setShow={setToastMessage}
+              variant={ERROR}
+            >
+              <span>{toastMessage}</span>
+            </Alert>
+          </div>
         </div>
       </Card>
     </div>);
