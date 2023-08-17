@@ -6,13 +6,14 @@ import { useEffect } from 'react'
 interface Props {
   children: React.ReactNode
   show: boolean
-  duration?: number
   setShow: React.Dispatch<React.SetStateAction<boolean | string>>
+  duration?: number
   variant?: variantType
+  className?: string
 }
 
 
-const Alert = ({ children, show, setShow, duration = 4000, variant = SUCCESS }: Props) => {
+const Alert = ({ children, show, setShow, duration = 4000, className = '', variant = SUCCESS }: Props) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,7 +40,7 @@ const Alert = ({ children, show, setShow, duration = 4000, variant = SUCCESS }: 
 
 
   return show ? (
-    <div className={`text-sm px-4 py-3 leading-normal ${typeTW} rounded-lg`} role="alert">
+    <div className={`text-sm px-4 py-3 leading-normal ${typeTW} rounded-lg ${className}`} role="alert">
       {children}
     </div>
   ) : null;
