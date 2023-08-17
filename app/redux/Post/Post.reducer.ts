@@ -7,20 +7,21 @@ export interface PostState {
   isLoading: boolean
 }
 
-const initialState: PostState = {
+const INIT_STATE: PostState = {
   value: [],
   isLoading: true,
 }
 
 export const postSlice = createSlice({
   name: 'posts',
-  initialState,
+  initialState: INIT_STATE,
   reducers: {
     initialSetPost: (store, { payload }: PayloadAction<Array<Post>>) => {
       store.value = payload
     },
     ResetInitValPost: (store) => {
-      store = { ...initialState }
+      store.value = [];
+      store.isLoading = true;
     },
     setIsLoading: (store, { payload }: PayloadAction<boolean>) => {
       store.isLoading = payload

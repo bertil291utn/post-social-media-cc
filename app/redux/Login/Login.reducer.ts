@@ -10,14 +10,14 @@ export interface LoginState {
   isLoading: boolean
 }
 
-const initialState: LoginState = {
+const INIT_STATE: LoginState = {
   value: {} as Login,
   isLoading: true,
 }
 
 export const LoginSlice = createSlice({
   name: 'login',
-  initialState,
+  initialState: INIT_STATE,
   reducers: {
     initialSetLogin: (store, { payload }: PayloadAction<Login>) => {
       store.value = payload;
@@ -25,7 +25,8 @@ export const LoginSlice = createSlice({
       localStorage.setItem(SAVED_USERNAME_DEVICE, payload.user.username)
     },
     SetLogOut: (store) => {
-      store = { ...initialState };
+      store.value = {} as Login;
+      store.isLoading = true;
       localStorage.removeItem(LOGIN_KEY)
     },
     setIsLoading: (store, { payload }: PayloadAction<boolean>) => {
