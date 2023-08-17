@@ -2,19 +2,22 @@
 
 import PostLayout from '@components/Post/layouts/Post.layout';
 import PostProvider from 'context/Post.context';
-import { POSTS } from 'dummyData/Posts.data';
+import { getAllPosts } from 'data/fetchPosts.data';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { initialSetPost, setIsLoading } from 'redux/Post/Post.reducer';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    //TODO: get POST from database instead local data; order desc by timestamp
-    dispatch(initialSetPost(POSTS))
-    dispatch(setIsLoading(false))
 
-  }, [])
+  const { loading, error, data } = getAllPosts();
+
+  useEffect(() => {
+    if (data?.posts) {
+      dispatch(initialSetPost(data?.posts))
+      dispatch(setIsLoading(loading))
+    }
+  }, [data])
 
   return (
     <PostProvider>
