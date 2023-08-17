@@ -16,6 +16,7 @@ import Button from '@components/common/Button/Button.component';
 import { postIsLoadingSelector, postsSelector } from 'redux/Post/post.selector';
 import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { useRouter } from 'next/navigation';
+import { LoginSelector } from 'redux/Login/Login.selector';
 
 
 const PostLayout = () => {
@@ -24,6 +25,8 @@ const PostLayout = () => {
   const [addPostModal, setAddPostModal] = useState(false);
   const _PostsArr = useSelector(postsSelector)
   const postsIsloading = useSelector(postIsLoadingSelector)
+  const login = useSelector(LoginSelector);
+  const user = login.user
   const dispatch = useDispatch();
 
   const AddPostOpenModal = () => {
@@ -45,24 +48,28 @@ const PostLayout = () => {
     const post = {
       ...formValues,
       timestamp: new Date().toISOString(),
+      isLiked: true,
       id: idPost,
-      likes: 0,
+      likes: 1,
       comments: 0,
       user: {
-        id: idUser,
-        username: generatedUser.login.username,
-        avatarURL: generatedUser.picture.medium,
-        name: `${generatedUser.name.first} ${generatedUser.name.last}`
+        id: user.id,
+        username: user.username,
+        avatarURL: user.avatarURL,
+        name: user.name
       }
     }
     updateFormValues(post)
-    dispatch(addNewPost(post))
     setAddPostModal(false)
+    //set
+    //TODO:trigger to db
+
+    dispatch(addNewPost(post))
+
 
     //TODO:if after 10 seconds doesn't return a value whetjer is error or a 202 value
     //close the modal and display an error
     //TODO: close and display a toast after being saved
-    //TODO:trigger to db
   }
   if (!_PostsArr.length && postsIsloading) {
     return (
