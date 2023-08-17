@@ -8,8 +8,8 @@ import { formatDate } from 'utils/formatDate.utils';
 const Post = ({ post }: { post: Post }) => {
   const dispatch = useDispatch();
 
-  const Like = () => {
-    dispatch(setLike(post))
+  const Like = (numberToLike: number) => () => {
+    dispatch(setLike({ payload: post, numberToLike }))
     //TODO:trigger also to db
 
   }
@@ -48,15 +48,15 @@ const Post = ({ post }: { post: Post }) => {
           <div className='flex gap-2'>
             {post.isLiked
               ?
-              <FcLike onClick={Like} className='text-xl cursor-pointer' title="Dislike" />
+              <FcLike onClick={Like(-1)} className='text-xl cursor-pointer' title="Dislike" />
               :
-              <FcLikePlaceholder onClick={Like} className='text-xl cursor-pointer' title="Like" />}
-            <span>{`${post.likes}${post.likes ? 'K' : ''}`}</span>
+              <FcLikePlaceholder onClick={Like(1)} className='text-xl cursor-pointer' title="Like" />}
+            <span>{`${post.likes}${post.likes > 1_000 ? 'K' : ''}`}</span>
           </div>
 
           <div className='flex gap-2 cursor-pointer' title='View comments'>
             <FcComments className='text-xl' />
-            <span>{`${post.comments}${post.comments ? 'K' : ''}`}</span>
+            <span>{`${post.comments}${post.comments > 1_000 ? 'K' : ''}`}</span>
           </div>
         </div>
 

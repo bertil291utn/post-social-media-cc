@@ -25,10 +25,11 @@ export const postSlice = createSlice({
     setIsLoading: (store, { payload }: PayloadAction<boolean>) => {
       store.isLoading = payload
     },
-    setLike: (store, { payload }: PayloadAction<Post>) => {
+    setLike: (store, action: PayloadAction<{ payload: Post; numberToLike: number }>) => {
+      const { payload, numberToLike } = action.payload;
       const postsArr = store.value.slice()
       const editedPostsArr = postsArr
-        .map(p => p.id == payload.id ? ({ ...p, isLiked: !p.isLiked }) : p)
+        .map(p => p.id == payload.id ? ({ ...p, isLiked: !p.isLiked, likes: p.likes + numberToLike }) : p)
       store.value = editedPostsArr
     },
     addNewPost: (store, { payload }: PayloadAction<Post>) => {
@@ -41,6 +42,6 @@ export const postSlice = createSlice({
   },
 })
 
-export const { initialSetPost, setIsLoading, setLike, addNewPost,ResetInitValPost } = postSlice.actions
+export const { initialSetPost, setIsLoading, setLike, addNewPost, ResetInitValPost } = postSlice.actions
 
 export default postSlice.reducer
