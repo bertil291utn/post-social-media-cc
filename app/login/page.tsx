@@ -89,7 +89,8 @@ const Login = () => {
             id: user.id,
             username: user.username,
             avatarURL: user.avatarURL,
-            name: user.name
+            name: user.name,
+            likedPosts: user.likedPosts
           }
         }
         onLoginSuccess();
@@ -98,9 +99,11 @@ const Login = () => {
       }
 
       const variables = { ..._formVal.user };
-      await addUserMutation({ variables });
-      onLoginSuccess();
-      dispatch(initialSetLogin(_formVal))
+      const resp = await addUserMutation({ variables });
+      if (resp.data.createUsers.users.length) {
+        onLoginSuccess();
+        dispatch(initialSetLogin(resp.data.createUsers.users[0]))
+      }
 
     } catch (error: any) {
       setToastMessage('Something happened, user is not signed up correctly')

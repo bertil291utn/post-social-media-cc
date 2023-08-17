@@ -15,6 +15,15 @@ export const checkExistingUser = (body: User) => {
       name
       username
       avatarURL
+      likedPosts {
+        comments
+        description
+        id
+        isLiked
+        likes
+        media
+        timestamp
+      }
     }
   }
 `;
@@ -40,6 +49,15 @@ export const saveUser = () => {
           id
           name
           username
+          likedPosts {
+            comments
+            description
+            id
+            isLiked
+            likes
+            media
+            timestamp
+          }
         }
       }
     }
