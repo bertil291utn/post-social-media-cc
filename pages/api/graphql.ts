@@ -27,7 +27,6 @@ type Post {
 
 `;
 
-// Create a Neo4j driver instance to connect to Neo4j AuraDB
 const driver = neo4j.driver(
   NEO4J_URI as string,
   neo4j.auth.basic(NEO4J_USERNAME as string, NEO4J_PASSWORD as string)

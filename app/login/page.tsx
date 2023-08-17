@@ -37,15 +37,15 @@ const Login = () => {
 
     //TODO: send user to save db and check behind the scenes if the current user 
     // already exists just login other case store whole form data 
-
+    _formVal.isActive = true
     dispatch(initialSetLogin(_formVal))
     dispatch(setIsLoading(false))
     router.replace('/')
-    
+
   }
 
   useEffect(() => {
-    const username= localStorage.getItem(SAVED_USERNAME_DEVICE) as string
+    const username = localStorage.getItem(SAVED_USERNAME_DEVICE) as string
     username && setFormValues((p) => ({ ...p, user: { ...p.user, username } }));
   }, [])
 
