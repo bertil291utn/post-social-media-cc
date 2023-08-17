@@ -2,52 +2,112 @@
 
 import Alert from '@components/common/Alert.component';
 import Button from '@components/common/Button/Button.component';
-import { TERTIARY } from '@components/common/Button/button.helper';
 import Card from '@components/common/Card.component';
 import { ERROR } from '@interfaces/ButtonVariantTypes.constants';
+import { User } from '@interfaces/User';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { FcGoogle } from "react-icons/fc";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SAVED_USERNAME_DEVICE } from 'redux/Login/Login.constant';
 import { initialSetLogin, setIsLoading } from 'redux/Login/Login.reducer';
+import { LoginSelector } from 'redux/Login/Login.selector';
+import { getRandomUser } from 'services/getRandomUser.service';
+import { checkEmpty, checkExistingUser, saveUser } from 'services/saveUser.service';
+import { v4 as uuidv4 } from 'uuid';
 
 const Login = () => {
   const router = useRouter()
-  const [toastMessage, setToastMessage] = useState<boolean | string>('')
-
+  const [toastMessage, setToastMessage] = useState<boolean | string>('');
+  const [addUserMutation] = saveUser();
+  const login = useSelector(LoginSelector)
   const [_formVal, setFormValues] = useState(
     {
       id: '',
-      isActive: false,
+      isActive: true,
       user: {
         id: '', username: '', name: '', avatarURL: ''
       }
     }
   )
-  const dispatch = useDispatch();
 
-
-
-  const LoginAction = () => {
-    if (!_formVal.user.username) {
-      setToastMessage('User name can not be empty')
-      return
-    }
-
-    //TODO: send user to save db and check behind the scenes if the current user 
-    // already exists just login other case store whole form data 
-    _formVal.isActive = true
-    dispatch(initialSetLogin(_formVal))
-    dispatch(setIsLoading(false))
-    router.replace('/')
-
+  const setUser = async () => {
+    const idUser = uuidv4();
+    let genereatedUser = await getRandomUser();
+    genereatedUser = genereatedUser.results[0];
+    const username = localStorage.getItem(SAVED_USERNAME_DEVICE) as string
+    setFormValues(p => ({
+      ...p,
+      user: {
+        id: idUser,
+        username: username || '',
+        avatarURL: genereatedUser.picture.medium,
+        name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
+      }
+    }))
   }
 
   useEffect(() => {
-    const username = localStorage.getItem(SAVED_USERNAME_DEVICE) as string
-    username && setFormValues((p) => ({ ...p, user: { ...p.user, username } }));
+    setUser()
   }, [])
+
+
+  useEffect(() => {
+    const username = localStorage.getItem(SAVED_USERNAME_DEVICE) as string
+    setFormValues(p => ({
+      ...p,
+      user: {
+        ...p.user,
+        username,
+      }
+    }))
+  }, [login?.isActive])
+
+  const { data: existingUser } = checkExistingUser(_formVal.user);
+
+
+  const dispatch = useDispatch();
+
+  const onLoginSuccess = () => {
+    dispatch(setIsLoading(false))
+    router.replace('/')
+  }
+
+  const LoginAction = async () => {
+    if (!_formVal.user.username) {
+      setToastMessage('User name can not be empty')
+      return;
+    }
+
+    try {
+      checkEmpty(_formVal.user);
+
+      if (existingUser?.users.length) {
+        const user = existingUser?.users[0] as User
+        const newLogin = {
+          ..._formVal,
+          user: {
+            id: user.id,
+            username: user.username,
+            avatarURL: user.avatarURL,
+            name: user.name
+          }
+        }
+        onLoginSuccess();
+        dispatch(initialSetLogin(newLogin))
+        return;
+      }
+
+      const variables = { ..._formVal.user };
+      await addUserMutation({ variables });
+      onLoginSuccess();
+      dispatch(initialSetLogin(_formVal))
+
+    } catch (error: any) {
+      setToastMessage('Something happened, user is not signed up correctly')
+    }
+
+  }
+
 
   const ActionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues((p) => ({ ...p, user: { ...p.user, username: e.target.value } }));

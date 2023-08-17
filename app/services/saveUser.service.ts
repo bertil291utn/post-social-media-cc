@@ -1,18 +1,34 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { User } from '@interfaces/User';
 
-export const saveUser = async (body: User) => {
+export const checkEmpty = (body: User) => {
   if (!body) throw new Error('Canot be empty body');
   if (!Object.keys(body).length) throw new Error('Canot be empty body');
+}
 
+export const checkExistingUser = (body: User) => {
+  checkEmpty(body);
   const CHECK_EXISTING_USER_QUERY = gql`
-    query CheckExistingUser($username: String) {
-      users(username: $username) {
-        username
-      }
+  query CheckExistingUser($username: String!) {
+    users(where: {username: $username}) {
+      id
+      name
+      username
+      avatarURL
     }
-  `;
+  }
+`;
 
+  const { username } = body;
+
+  return useQuery(CHECK_EXISTING_USER_QUERY, {
+    variables: { username },
+  });
+
+
+}
+
+export const saveUser = () => {
 
   const SAVE_USER_QUERY = gql`
     mutation AddUser($avatarURL: String = "", $id: ID = "", $name: String = "", $username: String = "") {
@@ -30,20 +46,7 @@ export const saveUser = async (body: User) => {
   `;
 
 
-  const [addUserMutation, { loading, error }] = useMutation(SAVE_USER_QUERY);
-
-  const { username } = body;
-
-  const { data } = await useQuery(CHECK_EXISTING_USER_QUERY, {
-    variables: { username },
-  });
-
-  if (data?.users.length) {
-    console.log("User already exists");
-    return;
-  }
-
-  const variables = { ...body };
-  return addUserMutation({ variables });
+  return useMutation(SAVE_USER_QUERY);
 
 }
+
