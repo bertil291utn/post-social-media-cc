@@ -2,15 +2,18 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { SetLogOut } from 'redux/Login/Login.reducer';
+import { LoginSelector } from 'redux/Login/Login.selector';
 import { ResetInitValPost } from 'redux/Post/Post.reducer';
 
 const Navbar = () => {
   const router = useRouter()
   const [showMenu, setShowMenu] = useState(false)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const login = useSelector(LoginSelector);
+  const user = login.user
 
   const signOut = () => {
     dispatch(SetLogOut())
@@ -48,11 +51,13 @@ const Navbar = () => {
             <div className="relative ml-3">
               <div>
                 <button
+                  title={user.name}
                   onClick={() => setShowMenu((previousState) => !previousState)}
                   type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <span className="absolute -inset-1.5"></span>
                   <span className="sr-only">Open user menu</span>
-                  <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  <img className="h-8 w-8 rounded-full" src={user.avatarURL}
+                  alt="profile" />
                 </button>
               </div>
 
