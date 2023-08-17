@@ -11,6 +11,12 @@ export const getAllPosts = (pageSize = 10) => {
       id
       description
       comments
+      user {
+        avatarURL
+        id
+        name
+        username
+      }
     }
   }
   `;
