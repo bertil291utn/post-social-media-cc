@@ -8,7 +8,7 @@ import Modal from '@components/common/Modal.component';
 import { useState } from 'react';
 import { usePostContext } from 'context/Post.context';
 import { v4 as uuidv4 } from 'uuid';
-import { getRandomUser } from 'fetchData/getRandomUser.fetch';
+import { getRandomUser } from 'services/getRandomUser.service';
 import { useDispatch, useSelector } from 'react-redux';
 import PostSkeleton from '@components/Post/PostSkeleton.component';
 import { addNewPost } from 'redux/Post/Post.reducer';
@@ -17,13 +17,6 @@ import { postIsLoadingSelector, postsSelector } from 'redux/Post/post.selector';
 import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { useRouter } from 'next/navigation';
 
-const getPosts = async () => {
-  const res = await fetch('https://api.example.com/...')
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  return res.json()
-}
 
 const PostLayout = () => {
   const router = useRouter();
