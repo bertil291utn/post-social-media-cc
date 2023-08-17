@@ -17,17 +17,25 @@ import { postIsLoadingSelector, postsSelector } from 'redux/Post/post.selector';
 import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { useRouter } from 'next/navigation';
 import { LoginSelector } from 'redux/Login/Login.selector';
+import { savePost } from 'services/savePost.service';
+import Alert from '@components/common/Alert.component';
+import { ERROR, SUCCESS } from '@interfaces/ButtonVariantTypes.constants';
+import { variantType } from '@interfaces/ButtonVariantType';
 
 
 const PostLayout = () => {
   const router = useRouter();
   const { formValues, updateFormValues, updateSubmittedForm } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
+  const [currentVariant, setCurrentVariant] = useState<variantType>(SUCCESS);
+  const [toastMessage, setToastMessage] = useState<boolean | string>('');
   const _PostsArr = useSelector(postsSelector)
   const postsIsloading = useSelector(postIsLoadingSelector)
   const login = useSelector(LoginSelector);
   const user = login.user
   const dispatch = useDispatch();
+  const [addPostMutation] = savePost()
+
 
   const AddPostOpenModal = () => {
     const theresSession = localStorage.getItem(LOGIN_KEY)
@@ -42,7 +50,6 @@ const PostLayout = () => {
   const AddPostBtnAction = async () => {
     updateSubmittedForm(true)
     const idPost = uuidv4();
-    const idUser = uuidv4();
     let generatedUser = await getRandomUser();
     generatedUser = generatedUser.results[0];
     const post = {
@@ -52,24 +59,29 @@ const PostLayout = () => {
       id: idPost,
       likes: 1,
       comments: 0,
-      user: {
-        id: user.id,
-        username: user.username,
-        avatarURL: user.avatarURL,
-        name: user.name
-      }
+      userId: user.id
     }
     updateFormValues(post)
-    setAddPostModal(false)
-    //set
-    //TODO:trigger to db
+   
+    try {
 
-    dispatch(addNewPost(post))
+      const variables = { ...post };
+      const resp = await addPostMutation({ variables });
+      if (resp.data.createPosts.posts.length) {
+        setAddPostModal(false)
+        dispatch(addNewPost(resp.data.createPosts.posts[0]))
+        setCurrentVariant(SUCCESS)
+        setToastMessage(`🎉 Post successfully added`)
+      }
+    } catch (error: any) {
+      setAddPostModal(false)
+      setCurrentVariant(ERROR)
+      setToastMessage('Something happened, post has not added correctly')
+
+    }
 
 
     //TODO:if after 10 seconds doesn't return a value whetjer is error or a 202 value
-    //close the modal and display an error
-    //TODO: close and display a toast after being saved
   }
   if (!_PostsArr.length && postsIsloading) {
     return (
@@ -114,6 +126,17 @@ const PostLayout = () => {
         setAddPostModal={setAddPostModal}
         AddPostBtnAction={AddPostBtnAction}
       />
+
+      <div className='fixed bottom-8 w-11/12'>
+        <Alert
+          show={!!toastMessage}
+          setShow={setToastMessage}
+          variant={currentVariant}
+          className='w-fit mx-auto'
+        >
+          <span>{toastMessage}</span>
+        </Alert>
+      </div>
 
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
       {/* TODO: reply with a comment task, leave to the end  */}
