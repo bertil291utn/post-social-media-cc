@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { SetLogOut } from 'redux/Login/Login.reducer';
+import { ResetInitValPost } from 'redux/Post/Post.reducer';
 
 const Navbar = () => {
   const router = useRouter()
@@ -13,6 +14,7 @@ const Navbar = () => {
 
   const signOut = () => {
     dispatch(SetLogOut())
+    dispatch(ResetInitValPost())
     router.replace('/login')
   }
 

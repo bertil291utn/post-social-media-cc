@@ -19,6 +19,9 @@ export const postSlice = createSlice({
     initialSetPost: (store, { payload }: PayloadAction<Array<Post>>) => {
       store.value = payload
     },
+    ResetInitValPost: (store) => {
+      store = { ...initialState }
+    },
     setIsLoading: (store, { payload }: PayloadAction<boolean>) => {
       store.isLoading = payload
     },
@@ -38,6 +41,6 @@ export const postSlice = createSlice({
   },
 })
 
-export const { initialSetPost, setIsLoading, setLike, addNewPost } = postSlice.actions
+export const { initialSetPost, setIsLoading, setLike, addNewPost,ResetInitValPost } = postSlice.actions
 
 export default postSlice.reducer

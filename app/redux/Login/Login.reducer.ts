@@ -25,7 +25,7 @@ export const LoginSlice = createSlice({
       localStorage.setItem(SAVED_USERNAME_DEVICE, payload.user.username)
     },
     SetLogOut: (store) => {
-      store = initialState;
+      store = { ...initialState };
       localStorage.removeItem(LOGIN_KEY)
     },
     setIsLoading: (store, { payload }: PayloadAction<boolean>) => {
