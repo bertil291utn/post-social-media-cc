@@ -79,9 +79,16 @@ const PostLayout = () => {
 
   if (!_PostsArr.length && !postsIsloading) {
     return (
-      <EmptyPosts
-        onClickAddPost={AddPostOpenModal}
-      />
+      <>
+        <EmptyPosts
+          onClickAddPost={AddPostOpenModal}
+        />
+        <AddPostModalLayout
+          addPostModal={addPostModal}
+          setAddPostModal={setAddPostModal}
+          AddPostBtnAction={AddPostBtnAction}
+        />
+      </>
     )
   }
 
@@ -102,14 +109,11 @@ const PostLayout = () => {
         ))
       }
 
-      <Modal
-        show={addPostModal}
-        setShow={setAddPostModal}
-        acceptLabel={'Add'}
-        acceptBtnAction={AddPostBtnAction}
-      >
-        <AddPostLayout />
-      </Modal>
+      <AddPostModalLayout
+        addPostModal={addPostModal}
+        setAddPostModal={setAddPostModal}
+        AddPostBtnAction={AddPostBtnAction}
+      />
 
       {/* TODO: add button to load more , being able to get posts by page size let say 10*/}
       {/* TODO: reply with a comment task, leave to the end  */}
@@ -119,3 +123,24 @@ const PostLayout = () => {
 }
 
 export default PostLayout;
+
+
+const AddPostModalLayout = ({ addPostModal, setAddPostModal, AddPostBtnAction }:
+  {
+    addPostModal: boolean
+    setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>
+    AddPostBtnAction: () => void
+  }
+) => {
+  return (
+
+    <Modal
+      show={addPostModal}
+      setShow={setAddPostModal}
+      acceptLabel={'Add'}
+      acceptBtnAction={AddPostBtnAction}
+    >
+      <AddPostLayout />
+    </Modal>
+  )
+}
