@@ -32,16 +32,16 @@ const Login = () => {
 
   const setUser = async () => {
     const idUser = uuidv4();
-    let genereatedUser = await getRandomUser();
-    genereatedUser = genereatedUser.results[0];
+    let generatedUser = await getRandomUser();
+    generatedUser = generatedUser.results[0];
     const username = localStorage.getItem(SAVED_USERNAME_DEVICE) as string
     setFormValues(p => ({
       ...p,
       user: {
         id: idUser,
         username: username || '',
-        avatarURL: genereatedUser.picture.medium,
-        name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
+        avatarURL: generatedUser.picture.medium,
+        name: `${generatedUser.name.first} ${generatedUser.name.last}`
       }
     }))
   }

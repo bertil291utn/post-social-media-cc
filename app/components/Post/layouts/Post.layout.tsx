@@ -40,8 +40,8 @@ const PostLayout = () => {
     updateSubmittedForm(true)
     const idPost = uuidv4();
     const idUser = uuidv4();
-    let genereatedUser = await getRandomUser();
-    genereatedUser = genereatedUser.results[0];
+    let generatedUser = await getRandomUser();
+    generatedUser = generatedUser.results[0];
     const post = {
       ...formValues,
       timestamp: new Date().toISOString(),
@@ -50,9 +50,9 @@ const PostLayout = () => {
       comments: 0,
       user: {
         id: idUser,
-        username: genereatedUser.login.username,
-        avatarURL: genereatedUser.picture.medium,
-        name: `${genereatedUser.name.first} ${genereatedUser.name.last}`
+        username: generatedUser.login.username,
+        avatarURL: generatedUser.picture.medium,
+        name: `${generatedUser.name.first} ${generatedUser.name.last}`
       }
     }
     updateFormValues(post)
