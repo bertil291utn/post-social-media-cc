@@ -19,24 +19,24 @@ const Post = ({ post }: { post: Post }) => {
 
   const Like = (numberToLike: number) => async () => {
 
+    dispatch(setLike({ payload: post, numberToLike }))
+    const variablesPost = {
+      userId: user.id,
+      postId: post.id
+    }
+    const variablesIncDecLikedPost = {
+      postId: post.id
+    }
     try {
-
-      dispatch(setLike({ payload: post, numberToLike }))
       if (numberToLike > 0) {
-        const variablesLikedPost = {
-          userId: user.id,
-          postId: post.id
-        }
-        const variablesIncrementLikedPost = {
-          postId: post.id
-        }
-        const UserLikedPosts = await likedPostsMutation({ variables: variablesLikedPost })
+        const UserLikedPosts = await likedPostsMutation({ variables: variablesPost })
+        await incrementLikesMutation({ variables: variablesIncDecLikedPost })
         if (UserLikedPosts.data.updateUsers.users.length) {
           dispatch(EditUserSetLogin(UserLikedPosts.data.updateUsers.users[0]))
         }
-        const r1 = await incrementLikesMutation({ variables: variablesIncrementLikedPost })
       }
     } catch (error: any) {
+      dispatch(setLike({ payload: post, numberToLike: numberToLike > 0 ? -1 : 1 }))
       setToastMessageLike('Something happened, user is not signed up correctly')
 
     }
