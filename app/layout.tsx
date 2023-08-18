@@ -9,8 +9,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Posts',
-  description: 'This is a post using x,y,z',
+  title: 'Social Media Timeline',
+  description: 'This is a social media timeline to like and dislike ',
 }
 
 export default function RootLayout({
