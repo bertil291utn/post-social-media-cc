@@ -12,13 +12,13 @@ import { SAVED_USERNAME_DEVICE } from 'redux/Login/Login.constant';
 import { initialSetLogin, setIsLoading } from 'redux/Login/Login.reducer';
 import { LoginSelector } from 'redux/Login/Login.selector';
 import { getRandomUser } from 'services/getRandomUser.service';
-import { checkEmpty, checkExistingUser, saveUser } from 'services/saveUser.service';
+import { checkEmpty, CheckExistingUser, SaveUser } from 'services/saveUser.service';
 import { v4 as uuidv4 } from 'uuid';
 
 const Login = () => {
   const router = useRouter()
   const [toastMessage, setToastMessage] = useState<boolean | string>('');
-  const [addUserMutation] = saveUser();
+  const [addUserMutation] = SaveUser();
   const login = useSelector(LoginSelector)
   const [_formVal, setFormValues] = useState(
     {
@@ -62,7 +62,7 @@ const Login = () => {
     }))
   }, [login?.isActive])
 
-  const { data: existingUser } = checkExistingUser(_formVal.user);
+  const { data: existingUser } = CheckExistingUser(_formVal.user);
 
 
   const dispatch = useDispatch();

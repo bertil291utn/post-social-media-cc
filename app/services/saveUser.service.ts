@@ -6,7 +6,7 @@ export const checkEmpty = (body: User) => {
   if (!Object.keys(body).length) throw new Error('Canot be empty body');
 }
 
-export const checkExistingUser = (body: User) => {
+export const CheckExistingUser = (body: User) => {
   checkEmpty(body);
   const CHECK_EXISTING_USER_QUERY = gql`
   query CheckExistingUser($username: String!) {
@@ -37,7 +37,7 @@ export const checkExistingUser = (body: User) => {
 
 }
 
-export const saveUser = () => {
+export const SaveUser = () => {
 
   const SAVE_USER_QUERY = gql`
     mutation AddUser($avatarURL: String = "", $id: ID = "", $name: String = "", $username: String = "") {

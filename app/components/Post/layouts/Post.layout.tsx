@@ -17,7 +17,7 @@ import { postIsLoadingSelector, postsSelector } from 'redux/Post/post.selector';
 import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { useRouter } from 'next/navigation';
 import { LoginSelector } from 'redux/Login/Login.selector';
-import { savePost } from 'services/savePost.service';
+import { SavePost } from 'services/savePost.service';
 import Alert from '@components/common/Alert.component';
 import { ERROR, SUCCESS } from '@interfaces/ButtonVariantTypes.constants';
 import { variantType } from '@interfaces/ButtonVariantType';
@@ -34,7 +34,7 @@ const PostLayout = () => {
   const login = useSelector(LoginSelector);
   const user = login.user
   const dispatch = useDispatch();
-  const [addPostMutation] = savePost()
+  const [addPostMutation] = SavePost()
 
 
 

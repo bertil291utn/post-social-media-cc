@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { SetLogOut } from 'redux/Login/Login.reducer';
 import { LoginSelector } from 'redux/Login/Login.selector';
 import { ResetInitValPost } from 'redux/Post/Post.reducer';

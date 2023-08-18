@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@apollo/client'
 
-export const updateUserLikedPosts = () => {
+export const UpdateUserLikedPosts = () => {
 
   const UPDATE_USER_QUERY = gql`
   mutation UpdateUserLikedPost($userId: ID = "", $postId: ID = "") {
@@ -30,7 +30,7 @@ export const updateUserLikedPosts = () => {
   return useMutation(UPDATE_USER_QUERY);
 }
 
-export const incrementPostLikes = () => {
+export const IncrementPostLikes = () => {
 
   const INCREMENT_POST_LIKES_QUERY = gql`
   mutation incrementPostLikes($postId: ID = "") {
@@ -52,7 +52,7 @@ export const incrementPostLikes = () => {
 }
 
 
-export const updateUserDisLikedPosts = () => {
+export const UpdateUserDisLikedPosts = () => {
 
   const UPDATE_USER_QUERY = gql`
   mutation UpdateUserLikedPost2($userId: ID = "", $postId: ID = "") {
@@ -82,7 +82,7 @@ export const updateUserDisLikedPosts = () => {
   return useMutation(UPDATE_USER_QUERY);
 }
 
-export const decrementPostLikes = () => {
+export const DecrementPostLikes = () => {
 
   const INCREMENT_POST_LIKES_QUERY = gql`
   mutation incrementPostLikes($postId: ID = "") {

@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 
-export const getAllPosts = (pageSize = 10) => {
+export const GetAllPosts = (pageSize = 10) => {
   const POSTS_SEARCH_QUERY = gql`
   query PostsQuery {
     posts(options: {limit: ${pageSize}, sort: {timestamp: DESC}}) {

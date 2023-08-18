@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@apollo/client';
 
-export const savePost = () => {
+export const SavePost = () => {
 
   const SAVE_POST_QUERY = gql`
   mutation AddPost($description: String!, $id: ID!, $timestamp: String!, $userId: ID!, $comments: Int = 0, $isLiked: Boolean = false, $likes: Int = 0, $media: String ="") {

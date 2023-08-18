@@ -2,7 +2,7 @@
 
 import PostLayout from '@components/Post/layouts/Post.layout';
 import PostProvider from 'context/Post.context';
-import { getAllPosts } from 'services/fetchPosts.service';
+import { GetAllPosts } from 'services/fetchPosts.service';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initialSetPost, setIsLoading } from 'redux/Post/Post.reducer';
@@ -12,7 +12,7 @@ import { LoginSelector } from 'redux/Login/Login.selector';
 const HomePage = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, data } = getAllPosts();
+  const { loading, error, data } = GetAllPosts();
   const login = useSelector(LoginSelector);
   const user = login.user
 

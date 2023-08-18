@@ -7,14 +7,14 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { LOGIN_KEY } from 'redux/Login/Login.constant'
 import { initialSetLogin, setIsLoading } from 'redux/Login/Login.reducer';
-import { checkExistingUser } from 'services/saveUser.service';
+import { CheckExistingUser } from 'services/saveUser.service';
 
 export const MiddleWareLogin = () => {
   const currentPathName = usePathname() as string;
   const router = useRouter();
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: '' } as User)
-  const { data: existingUser } = checkExistingUser(user);
+  const { data: existingUser } = CheckExistingUser(user);
 
   useEffect(() => {
     const isSessionActive = JSON.parse(localStorage.getItem(LOGIN_KEY) as string) as Login

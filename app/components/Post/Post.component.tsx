@@ -8,16 +8,16 @@ import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { EditUserSetLogin, initialSetLogin } from 'redux/Login/Login.reducer';
 import { LoginSelector } from 'redux/Login/Login.selector';
 import { setLike } from 'redux/Post/Post.reducer';
-import { decrementPostLikes, incrementPostLikes, updateUserDisLikedPosts, updateUserLikedPosts } from 'services/updateUserLikedPosts.service';
+import { DecrementPostLikes, IncrementPostLikes, UpdateUserDisLikedPosts, UpdateUserLikedPosts } from 'services/updateUserLikedPosts.service';
 import { formatDate } from 'utils/formatDate.utils';
 
 const Post = ({ post }: { post: Post }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [likedPostsMutation] = updateUserLikedPosts();
-  const [incrementLikesMutation] = incrementPostLikes();
-  const [disLikedPostsMutation] = updateUserDisLikedPosts();
-  const [decrementLikesMutation] = decrementPostLikes();
+  const [likedPostsMutation] = UpdateUserLikedPosts();
+  const [incrementLikesMutation] = IncrementPostLikes();
+  const [disLikedPostsMutation] = UpdateUserDisLikedPosts();
+  const [decrementLikesMutation] = DecrementPostLikes();
   const { setToastMessageLike } = usePostContext();
   const login = useSelector(LoginSelector);
   const user = login.user
