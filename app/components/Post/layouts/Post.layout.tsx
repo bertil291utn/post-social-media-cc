@@ -25,7 +25,7 @@ import { variantType } from '@interfaces/ButtonVariantType';
 
 const PostLayout = () => {
   const router = useRouter();
-  const { formValues, updateFormValues, updateSubmittedForm } = usePostContext();
+  const { formValues, updateFormValues, updateSubmittedForm, toastMessageLike, setToastMessageLike } = usePostContext();
   const [addPostModal, setAddPostModal] = useState(false);
   const [currentVariant, setCurrentVariant] = useState<variantType>(SUCCESS);
   const [toastMessage, setToastMessage] = useState<boolean | string>('');
@@ -35,6 +35,7 @@ const PostLayout = () => {
   const user = login.user
   const dispatch = useDispatch();
   const [addPostMutation] = savePost()
+
 
 
   const AddPostOpenModal = () => {
@@ -62,7 +63,7 @@ const PostLayout = () => {
       userId: user.id
     }
     updateFormValues(post)
-   
+
     try {
 
       const variables = { ...post };

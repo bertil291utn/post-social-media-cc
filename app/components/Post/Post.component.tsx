@@ -1,4 +1,5 @@
 import Card from '@components/common/Card.component';
+import { usePostContext } from 'context/Post.context';
 import { Post } from 'interfaces/Post'
 import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +13,7 @@ const Post = ({ post }: { post: Post }) => {
   const dispatch = useDispatch();
   const [likedPostsMutation] = updateUserLikedPosts();
   const [incrementLikesMutation] = incrementPostLikes();
+  const { setToastMessageLike } = usePostContext();
   const login = useSelector(LoginSelector);
   const user = login.user
 
@@ -35,8 +37,7 @@ const Post = ({ post }: { post: Post }) => {
         const r1 = await incrementLikesMutation({ variables: variablesIncrementLikedPost })
       }
     } catch (error: any) {
-      console.log("🚀 ~ file: Post.component.tsx:35 ~ Like ~ error:", error.message)
-      // setToastMessage('Something happened, user is not signed up correctly')
+      setToastMessageLike('Something happened, user is not signed up correctly')
 
     }
 

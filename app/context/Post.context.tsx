@@ -12,6 +12,8 @@ interface IContextProps {
   updateFormValues: (Post: Post) => void
   submittedForm: boolean
   updateSubmittedForm: (val: boolean) => void
+  toastMessageLike: string | boolean
+  setToastMessageLike: React.Dispatch<React.SetStateAction<boolean | string>>
 }
 
 const PostContext = createContext<IContextProps>({} as IContextProps);
@@ -19,6 +21,7 @@ const PostContext = createContext<IContextProps>({} as IContextProps);
 const PostProvider = ({ children }: IPropsProv) => {
   const [submittedForm, setSubmittedForm] = useState(false)
   const [formValues, setFormValues] = useState({} as Post);
+  const [toastMessageLike, setToastMessageLike] = useState<boolean | string>('');
 
   const updateFormValues = (
     Post: Post,
@@ -30,6 +33,11 @@ const PostProvider = ({ children }: IPropsProv) => {
   ) => {
     setSubmittedForm(val);
   }
+  const updateToastMessageLike = (
+    val: string,
+  ) => {
+    setToastMessageLike(val);
+  }
 
   return (
     <PostContext.Provider
@@ -37,7 +45,9 @@ const PostProvider = ({ children }: IPropsProv) => {
         formValues,
         updateFormValues,
         submittedForm,
-        updateSubmittedForm
+        updateSubmittedForm,
+        toastMessageLike,
+        setToastMessageLike
       }}
     >
       {children}
