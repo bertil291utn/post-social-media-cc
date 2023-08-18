@@ -32,7 +32,7 @@ const HomePage = () => {
     }
     dispatch(initialSetPost(posts))
     dispatch(setIsLoading(loading))
-  }, [data, user])
+  }, [data])
 
   return (
     <PostProvider>
