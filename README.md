@@ -1,8 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
-
-First, run the development server:
+  
+  1. Add a `env.local` file by adding env varibles as we have on  `env.example` file. Create an account on [Neo4J page](https://neo4j.com/); it'd be great if you follow [this tuto](https://www.smashingmagazine.com/2023/03/full-stack-graphql-nextjs-neo4j-auradb-vercel/#neo4j-auradb-overview-graph-data-in-the-cloud) how to create a database instance and download `.env` credentials file
+  2. Run the development server:
 
 ```bash
 npm run dev
