@@ -6,13 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { EditUserSetLogin, initialSetLogin } from 'redux/Login/Login.reducer';
 import { LoginSelector } from 'redux/Login/Login.selector';
 import { setLike } from 'redux/Post/Post.reducer';
-import { incrementPostLikes, updateUserLikedPosts } from 'services/updateUserLikedPosts.service';
+import { decrementPostLikes, incrementPostLikes, updateUserDisLikedPosts, updateUserLikedPosts } from 'services/updateUserLikedPosts.service';
 import { formatDate } from 'utils/formatDate.utils';
 
 const Post = ({ post }: { post: Post }) => {
   const dispatch = useDispatch();
   const [likedPostsMutation] = updateUserLikedPosts();
   const [incrementLikesMutation] = incrementPostLikes();
+  const [disLikedPostsMutation] = updateUserDisLikedPosts();
+  const [decrementLikesMutation] = decrementPostLikes();
   const { setToastMessageLike } = usePostContext();
   const login = useSelector(LoginSelector);
   const user = login.user
@@ -28,13 +30,25 @@ const Post = ({ post }: { post: Post }) => {
       postId: post.id
     }
     try {
+      // LIKE
       if (numberToLike > 0) {
         const UserLikedPosts = await likedPostsMutation({ variables: variablesPost })
         await incrementLikesMutation({ variables: variablesIncDecLikedPost })
         if (UserLikedPosts.data.updateUsers.users.length) {
           dispatch(EditUserSetLogin(UserLikedPosts.data.updateUsers.users[0]))
         }
+        return;
       }
+
+      // DISLIKE
+      if (numberToLike < 0) {
+        const UserDisLikedPosts = await disLikedPostsMutation({ variables: variablesPost })
+        await decrementLikesMutation({ variables: variablesIncDecLikedPost })
+        if (UserDisLikedPosts.data.updateUsers.users.length) {
+          dispatch(EditUserSetLogin(UserDisLikedPosts.data.updateUsers.users[0]))
+        }
+      }
+
     } catch (error: any) {
       dispatch(setLike({ payload: post, numberToLike: numberToLike > 0 ? -1 : 1 }))
       setToastMessageLike('Something happened, user is not signed up correctly')
