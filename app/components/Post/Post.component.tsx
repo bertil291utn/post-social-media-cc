@@ -1,16 +1,44 @@
 import Card from '@components/common/Card.component';
 import { Post } from 'interfaces/Post'
 import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { EditUserSetLogin, initialSetLogin } from 'redux/Login/Login.reducer';
+import { LoginSelector } from 'redux/Login/Login.selector';
 import { setLike } from 'redux/Post/Post.reducer';
+import { incrementPostLikes, updateUserLikedPosts } from 'services/updateUserLikedPosts.service';
 import { formatDate } from 'utils/formatDate.utils';
 
 const Post = ({ post }: { post: Post }) => {
   const dispatch = useDispatch();
+  const [likedPostsMutation] = updateUserLikedPosts();
+  const [incrementLikesMutation] = incrementPostLikes();
+  const login = useSelector(LoginSelector);
+  const user = login.user
 
-  const Like = (numberToLike: number) => () => {
-    dispatch(setLike({ payload: post, numberToLike }))
-    //TODO:trigger also to db
+  const Like = (numberToLike: number) => async () => {
+
+    try {
+
+      dispatch(setLike({ payload: post, numberToLike }))
+      if (numberToLike > 0) {
+        const variablesLikedPost = {
+          userId: user.id,
+          postId: post.id
+        }
+        const variablesIncrementLikedPost = {
+          postId: post.id
+        }
+        const UserLikedPosts = await likedPostsMutation({ variables: variablesLikedPost })
+        if (UserLikedPosts.data.updateUsers.users.length) {
+          dispatch(EditUserSetLogin(UserLikedPosts.data.updateUsers.users[0]))
+        }
+        const r1 = await incrementLikesMutation({ variables: variablesIncrementLikedPost })
+      }
+    } catch (error: any) {
+      console.log("🚀 ~ file: Post.component.tsx:35 ~ Like ~ error:", error.message)
+      // setToastMessage('Something happened, user is not signed up correctly')
+
+    }
 
   }
 

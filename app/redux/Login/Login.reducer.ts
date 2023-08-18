@@ -1,4 +1,5 @@
 import { Login } from '@interfaces/Login'
+import { User } from '@interfaces/User'
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { LOGIN_KEY, SAVED_USERNAME_DEVICE } from 'redux/Login/Login.constant'
@@ -24,6 +25,9 @@ export const LoginSlice = createSlice({
       localStorage.setItem(LOGIN_KEY, JSON.stringify(payload))
       localStorage.setItem(SAVED_USERNAME_DEVICE, payload.user?.username)
     },
+    EditUserSetLogin: (store, { payload }: PayloadAction<User>) => {
+      store.value = { ...store.value, user: payload };
+    },
     SetLogOut: (store) => {
       store.value = {} as Login;
       store.isLoading = true;
@@ -35,6 +39,6 @@ export const LoginSlice = createSlice({
   },
 })
 
-export const { initialSetLogin, setIsLoading, SetLogOut } = LoginSlice.actions
+export const { initialSetLogin, setIsLoading, SetLogOut, EditUserSetLogin } = LoginSlice.actions
 
 export default LoginSlice.reducer
