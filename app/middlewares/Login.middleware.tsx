@@ -17,12 +17,14 @@ export const MiddleWareLogin = () => {
   const { data: existingUser } = checkExistingUser(user);
 
   useEffect(() => {
-    const _formVal = JSON.parse(localStorage.getItem(LOGIN_KEY) as string) as Login
-    if (!_formVal) return
-    setUser(_formVal.user)
-    dispatch(initialSetLogin({ ..._formVal, user: existingUser }))
+    const isSessionActive = JSON.parse(localStorage.getItem(LOGIN_KEY) as string) as Login
+    if (!isSessionActive) return
+    setUser(isSessionActive.user)
+
+    if (!existingUser?.users.length) return
+    dispatch(initialSetLogin({ ...isSessionActive, user: existingUser?.users[0] }))
     dispatch(setIsLoading(false))
-  }, [])
+  }, [existingUser])
 
 
   const checkLoginService = () => {
