@@ -125,7 +125,7 @@ const Login = () => {
             <div className="mt-2">
               <div className="flex rounded-md shadow-sm ring-1 ring-inset focus:ring-0 ring-gray-300  sm:max-w-md">
                 <input type="text" name="username" id="username" autoComplete="username"
-                  value={_formVal.user.username}
+                  value={_formVal.user.username||''}
                   onChange={ActionChange}
                   className="
                 block flex-1 border-0 bg-transparent p-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
