@@ -24,7 +24,7 @@ export const MiddleWareLogin = () => {
     if (!existingUser?.users.length) return
     dispatch(initialSetLogin({ ...isSessionActive, user: existingUser?.users[0] }))
     dispatch(setIsLoading(false))
-  }, [existingUser])
+  }, [existingUser?.users])
 
 
   const checkLoginService = () => {
