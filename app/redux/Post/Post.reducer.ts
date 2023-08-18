@@ -30,7 +30,7 @@ export const postSlice = createSlice({
       const { payload, numberToLike } = action.payload;
       const postsArr = store.value.slice()
       const editedPostsArr = postsArr
-        .map(p => p.id == payload.id ? ({ ...p, isLiked: !p.isLiked, likes: p.likes + numberToLike }) : p)
+        .map(p => p.id == payload.id ? ({ ...p, isLiked: !p.isLiked }) : p)
       store.value = editedPostsArr
     },
     addNewPost: (store, { payload }: PayloadAction<Post>) => {
