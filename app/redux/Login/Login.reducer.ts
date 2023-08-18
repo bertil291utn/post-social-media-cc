@@ -22,7 +22,7 @@ export const LoginSlice = createSlice({
     initialSetLogin: (store, { payload }: PayloadAction<Login>) => {
       store.value = payload;
       localStorage.setItem(LOGIN_KEY, JSON.stringify(payload))
-      localStorage.setItem(SAVED_USERNAME_DEVICE, payload.user.username)
+      localStorage.setItem(SAVED_USERNAME_DEVICE, payload.user?.username)
     },
     SetLogOut: (store) => {
       store.value = {} as Login;

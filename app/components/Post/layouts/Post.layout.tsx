@@ -55,9 +55,9 @@ const PostLayout = () => {
     const post = {
       ...formValues,
       timestamp: new Date().toISOString(),
-      isLiked: true,
+      isLiked: false,
       id: idPost,
-      likes: 1,
+      likes: 0,
       comments: 0,
       userId: user.id
     }

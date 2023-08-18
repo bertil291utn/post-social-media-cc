@@ -21,11 +21,11 @@ const HomePage = () => {
     //it might need to add a 10 seccs delay and thwn display as empty posts
     if (!data?.posts) return;
     let posts = data?.posts as Array<Post>
-    if (!user.likedPosts!.length) {
+    if (!user?.likedPosts!.length) {
       posts = posts.map(p => ({ ...p, isLiked: false }))
 
     }
-    if (user.likedPosts!.length) {
+    if (user?.likedPosts!.length) {
       const likedPostsIdArr = user.likedPosts!.map(p => p.id)
       posts = posts.map(p => ({ ...p, isLiked: likedPostsIdArr.includes(p.id) }))
     }
