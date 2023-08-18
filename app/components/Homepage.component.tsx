@@ -25,13 +25,14 @@ const HomePage = () => {
       posts = posts.map(p => ({ ...p, isLiked: false }))
 
     }
+
     if (user?.likedPosts!.length) {
       const likedPostsIdArr = user.likedPosts!.map(p => p.id)
       posts = posts.map(p => ({ ...p, isLiked: likedPostsIdArr.includes(p.id) }))
     }
     dispatch(initialSetPost(posts))
     dispatch(setIsLoading(loading))
-  }, [data])
+  }, [data, user])
 
   return (
     <PostProvider>

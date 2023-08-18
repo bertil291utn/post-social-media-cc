@@ -18,7 +18,7 @@ const Navbar = () => {
   const signOut = () => {
     dispatch(SetLogOut())
     dispatch(ResetInitValPost())
-    router.replace('/login')
+    router.replace('/')
   }
 
   return (

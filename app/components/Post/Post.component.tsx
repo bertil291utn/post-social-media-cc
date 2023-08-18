@@ -1,8 +1,10 @@
 import Card from '@components/common/Card.component';
 import { usePostContext } from 'context/Post.context';
 import { Post } from 'interfaces/Post'
+import { useRouter } from 'next/navigation';
 import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
 import { useDispatch, useSelector } from 'react-redux';
+import { LOGIN_KEY } from 'redux/Login/Login.constant';
 import { EditUserSetLogin, initialSetLogin } from 'redux/Login/Login.reducer';
 import { LoginSelector } from 'redux/Login/Login.selector';
 import { setLike } from 'redux/Post/Post.reducer';
@@ -10,6 +12,7 @@ import { decrementPostLikes, incrementPostLikes, updateUserDisLikedPosts, update
 import { formatDate } from 'utils/formatDate.utils';
 
 const Post = ({ post }: { post: Post }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [likedPostsMutation] = updateUserLikedPosts();
   const [incrementLikesMutation] = incrementPostLikes();
@@ -20,6 +23,11 @@ const Post = ({ post }: { post: Post }) => {
   const user = login.user
 
   const Like = (numberToLike: number) => async () => {
+    const theresSession = localStorage.getItem(LOGIN_KEY)
+    if (!theresSession) {
+      router.replace('/login')
+      return
+    }
 
     dispatch(setLike({ payload: post, numberToLike }))
     const variablesPost = {
